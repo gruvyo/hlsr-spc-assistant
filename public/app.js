@@ -102,4 +102,79 @@
   document.querySelectorAll('.starter').forEach((b) => {
     b.addEventListener('click', () => ask(b.textContent));
   });
+
+  // ---- Contact captain (simulated) ----
+  // Sample roster only. Real captain contacts are confidential member data
+  // and would come from a private source, not this public repo.
+  const CAPTAINS = {
+    '42': { name: 'Dale Ramirez', email: 'team42.captain@example.com' },
+    '17': { name: 'Brenda Okafor', email: 'team17.captain@example.com' },
+    '103': { name: 'Sam Whitfield', email: 'team103.captain@example.com' },
+    '256': { name: 'Priya Nair', email: 'team256.captain@example.com' },
+  };
+
+  const modal = document.getElementById('captain-modal');
+  const capForm = document.getElementById('captain-form');
+  const capSent = document.getElementById('captain-sent');
+  const teamEl = document.getElementById('cap-team');
+  const matchEl = document.getElementById('cap-match');
+  const previewEl = document.getElementById('cap-preview');
+
+  function openModal() {
+    capForm.hidden = false;
+    capSent.hidden = true;
+    capForm.reset();
+    matchEl.textContent = '';
+    matchEl.className = 'cap-match';
+    modal.hidden = false;
+    teamEl.focus();
+  }
+  function closeModal() { modal.hidden = true; }
+
+  function transcript() {
+    if (!history.length) return '(No conversation yet.)';
+    return history
+      .map((m) => (m.role === 'user' ? 'You: ' : 'Assistant: ') + m.content)
+      .join('\n\n');
+  }
+
+  teamEl.addEventListener('input', () => {
+    const cap = CAPTAINS[teamEl.value.trim()];
+    if (!teamEl.value.trim()) {
+      matchEl.textContent = '';
+      matchEl.className = 'cap-match';
+    } else if (cap) {
+      matchEl.textContent = 'Captain: ' + cap.name;
+      matchEl.className = 'cap-match found';
+    } else {
+      matchEl.textContent = 'No captain found for that team (sample roster).';
+      matchEl.className = 'cap-match missing';
+    }
+  });
+
+  capForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const team = teamEl.value.trim();
+    const cap = CAPTAINS[team];
+    if (!cap) { teamEl.focus(); return; }
+
+    const email = document.getElementById('cap-email').value.trim();
+    const message = document.getElementById('cap-message').value.trim();
+    const includeTx = document.getElementById('cap-transcript').checked;
+
+    let body = `To: ${cap.name} <${cap.email}>\n`;
+    body += `Cc: ${email || '(none)'}\n`;
+    body += `Subject: Question for the Team ${team} captain — via SPC Assistant\n\n`;
+    body += message;
+    if (includeTx) body += `\n\n--- Chat transcript ---\n${transcript()}`;
+
+    previewEl.textContent = body;
+    capForm.hidden = true;
+    capSent.hidden = false;
+  });
+
+  document.getElementById('captain-open').addEventListener('click', openModal);
+  document.getElementById('captain-close').addEventListener('click', closeModal);
+  document.getElementById('captain-overlay').addEventListener('click', closeModal);
+  document.getElementById('captain-done').addEventListener('click', closeModal);
 })();

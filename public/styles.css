@@ -223,3 +223,81 @@ body {
 }
 .composer-send:hover { background: #d9631a; }
 .composer-send:disabled { opacity: 0.5; cursor: default; }
+
+/* ---- Contact captain ---- */
+.captain-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 2rem;
+  padding: 0.5rem 0.95rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.captain-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--white); }
+
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; }
+.modal[hidden] { display: none; }
+.modal-overlay { position: absolute; inset: 0; background: rgba(35, 31, 32, 0.55); }
+
+.sheet {
+  position: relative;
+  width: min(440px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 1.4rem;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.sheet-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+.sheet-title { font-size: 1.2rem; font-weight: 700; margin: 0; }
+.sheet-close { background: none; border: none; font-size: 1.6rem; line-height: 1; color: var(--muted); cursor: pointer; }
+.sheet-close:hover { color: var(--ink); }
+
+.cap-form { display: flex; flex-direction: column; gap: 1rem; }
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field > span:first-child {
+  font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.field input, .field textarea {
+  border: 1px solid var(--line); border-radius: 10px; padding: 0.7rem 0.85rem;
+  font-family: var(--sans); font-size: 0.98rem; background: var(--bg); resize: vertical;
+}
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--glaucous); background: var(--white); }
+
+.cap-match { font-size: 0.85rem; font-weight: 600; min-height: 1.1em; }
+.cap-match.found { color: var(--black-cherry); }
+.cap-match.missing { color: #9a3b1a; }
+
+.check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--ink); cursor: pointer; }
+.check input { width: 16px; height: 16px; accent-color: var(--pumpkin); }
+
+.btn-primary {
+  background: var(--pumpkin); color: #2a1405; border: none; border-radius: 2rem;
+  padding: 0.8rem 1.2rem; font-family: var(--sans); font-size: 0.95rem; font-weight: 600; cursor: pointer;
+}
+.btn-primary:hover { background: #d9631a; }
+.btn-primary:disabled { opacity: 0.5; cursor: default; }
+
+.cap-sent { display: flex; flex-direction: column; gap: 1rem; }
+.cap-banner {
+  background: var(--pearl); color: var(--black-cherry); font-weight: 600;
+  border-radius: 10px; padding: 0.7rem 0.9rem; margin: 0; font-size: 0.9rem;
+}
+.cap-preview {
+  background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.9rem; margin: 0; font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.82rem; line-height: 1.5; white-space: pre-wrap; color: var(--ink);
+  max-height: 320px; overflow-y: auto;
+}
+
+/* hidden attribute must win over the flex display above */
+.cap-form[hidden], .cap-sent[hidden] { display: none; }
