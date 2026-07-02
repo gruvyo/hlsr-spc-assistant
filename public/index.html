@@ -2,55 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Souvenir Program Committee — Assistant (Proof of Concept)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>SPC Member Assistant</title>
+  <link rel="icon" href="logo.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="page">
-    <header class="masthead">
-      <p class="kicker">Houston Livestock Show &amp; Rodeo</p>
-      <h1>Souvenir Program Committee</h1>
-      <p class="lede">Member assistant, proof of concept. Ask a question about forms, deadlines, ad ordering, or committee procedures, and it answers from the committee knowledge base.</p>
+  <div class="app">
+    <header class="app-header">
+      <img class="logo" src="logo.webp" alt="Souvenir Program Committee" />
+      <div class="app-title">
+        <p class="app-name">Souvenir Program Committee</p>
+        <p class="app-sub"><span class="dot"></span>Member Assistant</p>
+      </div>
     </header>
 
-    <section class="samples">
-      <p class="samples-label">Try asking</p>
-      <ul>
-        <li>What is the Advertiser Information Form and is it an order?</li>
-        <li>When is new artwork due?</li>
-        <li>How do I place an ad order?</li>
-      </ul>
-      <p class="note">Answers come only from the committee KB. If it doesn't know, it says so rather than guessing.</p>
-    </section>
-  </main>
-
-  <!-- Floating assistant -->
-  <div class="chat" id="chat">
-    <div class="chat-panel" id="chat-panel" hidden>
-      <div class="chat-header">
-        <div>
-          <p class="chat-title">SPC Assistant</p>
-          <p class="chat-status">Answers from the committee KB</p>
+    <div class="chat-log" id="chat-log">
+      <div class="msg bot">
+        <div class="bubble">
+          <p>Howdy! I'm the Souvenir Program Committee assistant. Ask me about forms, deadlines, ad ordering, or committee procedures and I'll answer from the committee knowledge base.</p>
         </div>
-        <button class="chat-close" id="chat-close" aria-label="Close">&times;</button>
       </div>
-      <div class="chat-log" id="chat-log">
-        <div class="chat-msg bot">Hi! Ask me anything about the Souvenir Program Committee, forms, deadlines, ad ordering, or procedures. I answer from the committee knowledge base.</div>
+      <div class="starters" id="starters">
+        <button class="starter">What is the Advertiser Information Form?</button>
+        <button class="starter">When is new artwork due?</button>
+        <button class="starter">How do I place an ad order?</button>
       </div>
-      <form class="chat-form" id="chat-form">
-        <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question" autocomplete="off" required />
-        <button class="chat-send" type="submit" aria-label="Send">&rarr;</button>
-      </form>
     </div>
-    <button class="chat-toggle" id="chat-toggle" aria-label="Open assistant">
-      <span class="chat-toggle-dot"></span>Ask the Assistant
-    </button>
+
+    <form class="composer" id="composer">
+      <input class="composer-input" id="composer-input" type="text" placeholder="Ask a question…" autocomplete="off" required />
+      <button class="composer-send" type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a1 1 0 00-1.39 1.2l2.1 6.28L14 12l-9.9.92-2.09 6.28a1 1 0 001.39 1.2z"/></svg>
+      </button>
+    </form>
   </div>
 
-  <script src="widget.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
