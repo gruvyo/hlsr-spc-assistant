@@ -119,6 +119,22 @@ exports.handler = async (event) => {
           .map((r) => ({ title: r.d.title, url: r.d.source_url }))
       : [];
 
+    // Interaction log (read-only signal for later KB review). Never edits the
+    // KB. Wrapped so logging can never affect the response.
+    try {
+      const disposition = /\?\s*$/.test(reply.trim()) ? 'clarify' : answered ? 'answered' : 'decline';
+      console.log(
+        'INTERACTION ' +
+          JSON.stringify({
+            ts: new Date().toISOString(),
+            q: question,
+            disposition,
+            top: ranked.slice(0, 5).map((r) => ({ id: r.d.id, s: Math.round(r.score * 1000) / 1000 })),
+            reply: reply.slice(0, 500),
+          })
+      );
+    } catch (e) {}
+
     return json(200, { reply, sources });
   } catch (e) {
     return json(500, { error: 'Request failed.' });

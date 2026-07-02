@@ -152,7 +152,7 @@
     }
   });
 
-  capForm.addEventListener('submit', (e) => {
+  capForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const team = teamEl.value.trim();
     const cap = CAPTAINS[team];
@@ -161,14 +161,35 @@
     const email = document.getElementById('cap-email').value.trim();
     const message = document.getElementById('cap-message').value.trim();
     const includeTx = document.getElementById('cap-transcript').checked;
+    const tx = includeTx ? transcript() : '(transcript not included)';
+
+    // Fill hidden fields so the Netlify submission carries them.
+    document.getElementById('cap-captain').value = `${cap.name} <${cap.email}>`;
+    document.getElementById('cap-transcript-field').value = tx;
 
     let body = `To: ${cap.name} <${cap.email}>\n`;
     body += `Cc: ${email || '(none)'}\n`;
     body += `Subject: Question for the Team ${team} captain — via SPC Assistant\n\n`;
     body += message;
-    if (includeTx) body += `\n\n--- Chat transcript ---\n${transcript()}`;
-
+    if (includeTx) body += `\n\n--- Chat transcript ---\n${tx}`;
     previewEl.textContent = body;
+
+    const banner = document.getElementById('cap-banner');
+    const btn = capForm.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    try {
+      // Netlify Forms captures this and emails it to the configured inbox.
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(capForm)).toString(),
+      });
+      banner.textContent = 'Sent. The committee has been notified by email.';
+    } catch (err) {
+      banner.textContent = 'Sending failed. Here is what would have been sent; please try again.';
+    }
+
     capForm.hidden = true;
     capSent.hidden = false;
   });
