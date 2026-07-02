@@ -104,14 +104,29 @@
   });
 
   // ---- Contact captain (simulated) ----
-  // Sample roster only. Real captain contacts are confidential member data
-  // and would come from a private source, not this public repo.
-  const CAPTAINS = {
-    '42': { name: 'Dale Ramirez', email: 'team42.captain@example.com' },
-    '17': { name: 'Brenda Okafor', email: 'team17.captain@example.com' },
-    '103': { name: 'Sam Whitfield', email: 'team103.captain@example.com' },
-    '256': { name: 'Priya Nair', email: 'team256.captain@example.com' },
-  };
+  // Sample names only. Real captain contacts are confidential member data
+  // and would come from a private source, not this public repo. For the POC
+  // the team field accepts anything and always resolves to a captain.
+  const CAPTAIN_NAMES = [
+    'Luke Combs', 'Jelly Roll', 'Carrie Underwood', 'Morgan Wallen', 'Lainey Wilson',
+    'Chris Stapleton', 'Miranda Lambert', 'Cody Johnson', 'Kacey Musgraves', 'George Strait',
+  ];
+  function captainFor(team) {
+    const t = String(team).trim();
+    if (!t) return null;
+    const n = parseInt(t, 10);
+    let idx;
+    if (Number.isInteger(n) && n >= 1 && n <= CAPTAIN_NAMES.length) {
+      idx = n - 1; // teams 1-10 map directly
+    } else {
+      let h = 0;
+      for (const c of t) h = (h + c.charCodeAt(0)) % CAPTAIN_NAMES.length;
+      idx = h; // any other input still resolves deterministically
+    }
+    const name = CAPTAIN_NAMES[idx];
+    const email = name.toLowerCase().replace(/[^a-z]+/g, '.') + '@example.com';
+    return { name, email };
+  }
 
   const modal = document.getElementById('captain-modal');
   const capForm = document.getElementById('captain-form');
@@ -139,23 +154,20 @@
   }
 
   teamEl.addEventListener('input', () => {
-    const cap = CAPTAINS[teamEl.value.trim()];
-    if (!teamEl.value.trim()) {
+    const cap = captainFor(teamEl.value);
+    if (!cap) {
       matchEl.textContent = '';
       matchEl.className = 'cap-match';
-    } else if (cap) {
+    } else {
       matchEl.textContent = 'Captain: ' + cap.name;
       matchEl.className = 'cap-match found';
-    } else {
-      matchEl.textContent = 'No captain found for that team (sample roster).';
-      matchEl.className = 'cap-match missing';
     }
   });
 
   capForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const team = teamEl.value.trim();
-    const cap = CAPTAINS[team];
+    const cap = captainFor(team);
     if (!cap) { teamEl.focus(); return; }
 
     const email = document.getElementById('cap-email').value.trim();
