@@ -1,0 +1,7 @@
+{
+  "buildCommand": "node scripts/build-embeddings.mjs",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/.netlify/functions/:fn", "destination": "/api/:fn" }
+  ]
+}
