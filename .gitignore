@@ -1,0 +1,4 @@
+# Generated at deploy time by scripts/build-embeddings.mjs
+netlify/functions/embeddings.json
+node_modules/
+.netlify/

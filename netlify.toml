@@ -1,0 +1,10 @@
+# Build embeddings from the KB at deploy time (needs OPENAI_API_KEY in the
+# Netlify build environment), serve the static page from public/, and expose
+# the ask function. embeddings.json ships inside the function bundle only.
+[build]
+  command = "node scripts/build-embeddings.mjs"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"

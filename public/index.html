@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Souvenir Program Committee — Assistant (Proof of Concept)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <p class="kicker">Houston Livestock Show &amp; Rodeo</p>
+      <h1>Souvenir Program Committee</h1>
+      <p class="lede">Member assistant, proof of concept. Ask a question about forms, deadlines, ad ordering, or committee procedures, and it answers from the committee knowledge base.</p>
+    </header>
+
+    <section class="samples">
+      <p class="samples-label">Try asking</p>
+      <ul>
+        <li>What is the Advertiser Information Form and is it an order?</li>
+        <li>When is new artwork due?</li>
+        <li>How do I place an ad order?</li>
+      </ul>
+      <p class="note">Answers come only from the committee KB. If it doesn't know, it says so rather than guessing.</p>
+    </section>
+  </main>
+
+  <!-- Floating assistant -->
+  <div class="chat" id="chat">
+    <div class="chat-panel" id="chat-panel" hidden>
+      <div class="chat-header">
+        <div>
+          <p class="chat-title">SPC Assistant</p>
+          <p class="chat-status">Answers from the committee KB</p>
+        </div>
+        <button class="chat-close" id="chat-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="chat-log" id="chat-log">
+        <div class="chat-msg bot">Hi! Ask me anything about the Souvenir Program Committee, forms, deadlines, ad ordering, or procedures. I answer from the committee knowledge base.</div>
+      </div>
+      <form class="chat-form" id="chat-form">
+        <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question" autocomplete="off" required />
+        <button class="chat-send" type="submit" aria-label="Send">&rarr;</button>
+      </form>
+    </div>
+    <button class="chat-toggle" id="chat-toggle" aria-label="Open assistant">
+      <span class="chat-toggle-dot"></span>Ask the Assistant
+    </button>
+  </div>
+
+  <script src="widget.js"></script>
+</body>
+</html>
