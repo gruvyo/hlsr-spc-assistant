@@ -170,28 +170,46 @@
     const cap = captainFor(team);
     if (!cap) { teamEl.focus(); return; }
 
+    const name = document.getElementById('cap-name').value.trim();
     const email = document.getElementById('cap-email').value.trim();
     const message = document.getElementById('cap-message').value.trim();
     const includeTx = document.getElementById('cap-transcript').checked;
-    const tx = includeTx ? transcript() : '(transcript not included)';
-
-    // Fill hidden fields so the Netlify submission carries them.
-    document.getElementById('cap-captain').value = `${cap.name} <${cap.email}>`;
-    document.getElementById('cap-transcript-field').value = tx;
-
-    let body = `To: ${cap.name} <${cap.email}>\n`;
-    body += `Cc: ${email || '(none)'}\n`;
-    body += `Subject: Question for the Team ${team} captain — via SPC Assistant\n\n`;
-    body += message;
-    if (includeTx) body += `\n\n--- Chat transcript ---\n${tx}`;
-    previewEl.textContent = body;
+    const tx = transcript();
 
     const banner = document.getElementById('cap-banner');
     const btn = capForm.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
+    // Brief AI summary of the conversation for the captain.
+    let summary = '';
+    if (includeTx) {
+      try {
+        const sres = await fetch('/.netlify/functions/summarize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transcript: tx }),
+        });
+        summary = (await sres.json()).summary || '';
+      } catch (e) {}
+    }
+
+    // Compose the email like a letter: greeting, message, signature, then
+    // (optionally) a summary and the full transcript.
+    const signature = `${name}${email ? `\n${email}` : ''}\nTeam ${team}`;
+    let body = `Hi ${cap.name},\n\n${message}\n\nThank you,\n${signature}`;
+    if (includeTx) {
+      if (summary) body += `\n\n---\nConversation summary: ${summary}`;
+      body += `\n\n--- Full transcript ---\n${tx}`;
+    }
+
+    // Fill hidden fields the Netlify submission carries.
+    document.getElementById('cap-captain').value = `${cap.name} <${cap.email}>`;
+    document.getElementById('cap-member').value = `${name}${email ? ` <${email}>` : ''}`;
+    document.getElementById('cap-email-body').value = body;
+
+    previewEl.textContent = body;
+
     try {
-      // Netlify Forms captures this and emails it to the configured inbox.
       await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

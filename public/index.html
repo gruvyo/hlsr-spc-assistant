@@ -71,19 +71,24 @@
         <input type="hidden" name="form-name" value="captain-contact" />
         <p class="hp"><label>Leave blank <input name="bot-field" /></label></p>
         <input type="hidden" name="captain" id="cap-captain" />
-        <input type="hidden" name="transcript" id="cap-transcript-field" />
+        <input type="hidden" name="member" id="cap-member" />
+        <input type="hidden" name="email_body" id="cap-email-body" />
         <label class="field">
           <span>Team number</span>
           <input type="text" name="team" id="cap-team" inputmode="numeric" placeholder="e.g. 5" required />
           <span class="cap-match" id="cap-match"></span>
         </label>
         <label class="field">
+          <span>Your name</span>
+          <input type="text" id="cap-name" placeholder="First and last name" required />
+        </label>
+        <label class="field">
           <span>Message to your captain</span>
-          <textarea name="message" id="cap-message" rows="3" placeholder="What would you like to ask your captain?" required></textarea>
+          <textarea id="cap-message" rows="3" placeholder="What would you like to ask your captain?" required></textarea>
         </label>
         <label class="field">
           <span>Your email (optional, to receive a copy)</span>
-          <input type="email" name="email" id="cap-email" placeholder="you@example.com" />
+          <input type="email" id="cap-email" placeholder="you@example.com" />
         </label>
         <label class="check">
           <input type="checkbox" id="cap-transcript" checked />
