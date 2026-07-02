@@ -14,13 +14,25 @@ const EMBED_MODEL = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
 const CHAT_MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
 const TOP_K = 5;
 
-const SYSTEM = `You are the assistant for the Houston Livestock Show and Rodeo (HLSR) Souvenir Program Committee.
-Answer questions from committee members using ONLY the CONTEXT documents provided.
-Rules:
-- If the answer is in the context, answer concisely.
-- Format in clean markdown: short paragraphs, bullet lists for steps or options, and a markdown table when presenting structured data like prices or specs.
-- If the context does not cover it, say you don't have that information and suggest they check the committee portal or contact committee leadership. Do not guess.
-- Never invent dates, prices, names, or deadlines that are not in the context.
+const SYSTEM = `You are the assistant for the Houston Livestock Show and Rodeo (HLSR) Souvenir Program Committee, helping committee members. Each question comes with CONTEXT: excerpts retrieved from the committee knowledge base.
+
+Behave like a careful, honest guide, not an eager one.
+
+Grounding:
+- Base every claim on the CONTEXT. If the context does not clearly support an answer, say so plainly and point the member to the committee portal or committee leadership. Do not fill gaps with guesses.
+- Never invent dates, prices, names, deadlines, or procedures that are not in the context.
+
+Ambiguity (ask before answering):
+- If the question is ambiguous, or the context contains more than one distinct topic that could be what they mean, ask ONE short clarifying question instead of picking one silently. Example: if "sizes" could mean advertisement page sizes or physical frame sizes, ask which they mean before answering.
+
+Do not just agree:
+- When a member asserts something ("I thought I do this in my membership profile"), do not simply agree to be polite. Check it against the context. If the context supports them, confirm and explain. If it contradicts them or does not cover it, say what the knowledge base actually shows and flag the uncertainty. A careful "here is what I can confirm" is better than an agreeable wrong answer.
+
+Limits:
+- The knowledge base is imperfect and may be incomplete or out of date. When the context is thin, conflicting, or you are unsure, say so rather than sounding confident.
+
+Format:
+- Answer concisely in clean markdown: short paragraphs, bullet lists for steps or options, a table for structured data like prices.
 - Do not list sources yourself; the app shows them separately.`;
 
 function cosine(a, b) {
@@ -59,11 +71,16 @@ exports.handler = async (event) => {
     return json(400, { error: 'Bad request.' });
   }
 
-  const question = [...messages].reverse().find((m) => m.role === 'user')?.content?.trim();
+  const userTurns = messages.filter((m) => m.role === 'user').map((m) => m.content.trim());
+  const question = userTurns[userTurns.length - 1];
   if (!question) return json(400, { error: 'No question.' });
 
+  // Embed recent user turns together so follow-ups ("where do I do this?")
+  // retrieve against the topic being discussed, not just the bare words.
+  const queryText = userTurns.slice(-3).join('\n');
+
   try {
-    const qVec = await embed(question);
+    const qVec = await embed(queryText);
     const ranked = KB.docs
       .map((d) => ({ d, score: cosine(qVec, d.embedding) }))
       .sort((a, b) => b.score - a.score)
@@ -90,9 +107,17 @@ exports.handler = async (event) => {
 
     const data = await chatRes.json();
     const reply = data.choices?.[0]?.message?.content ?? '';
-    const sources = ranked
-      .filter((r) => r.score > 0.2)
-      .map((r) => ({ title: r.d.title, url: r.d.source_url }));
+
+    // Only surface genuinely relevant docs, and only when the answer wasn't a
+    // clarifying question or a "don't have that" response.
+    const topScore = ranked[0]?.score ?? 0;
+    const answered = !/\?\s*$/.test(reply.trim()) && !/don'?t have (that|it)|not (in|covered)/i.test(reply);
+    const sources = answered
+      ? ranked
+          .filter((r) => r.score >= 0.35 && r.score >= topScore - 0.08)
+          .slice(0, 3)
+          .map((r) => ({ title: r.d.title, url: r.d.source_url }))
+      : [];
 
     return json(200, { reply, sources });
   } catch (e) {
