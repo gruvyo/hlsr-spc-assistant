@@ -103,7 +103,7 @@ exports.handler = async (event) => {
         messages: [
           { role: 'system', content: SYSTEM },
           ...messages.slice(-6, -1),
-          { role: 'user', content: `CONTEXT:\n${context}\n\nQUESTION: ${question}` },
+          { role: 'user', content: `CONTEXT:\n${context}\n\nToday's date is ${new Date().toISOString().slice(0, 10)}. For "next meeting" or upcoming-deadline questions, compare the dates against today and pick the next one still to come.\n\nQUESTION: ${question}` },
         ],
       }),
     });
