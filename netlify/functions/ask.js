@@ -2,7 +2,7 @@
 // and asks OpenAI to answer ONLY from those docs, with citations. The key
 // lives in OPENAI_API_KEY (Netlify env), never in the browser.
 
-let KB = { docs: [] };
+let KB = { chunks: [] };
 try {
   KB = require('./embeddings.json');
 } catch (e) {
@@ -15,7 +15,7 @@ const KEY = process.env.OPENAI_API_KEY;
 const BASE = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const EMBED_MODEL = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
 const CHAT_MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
-const TOP_K = 5;
+const TOP_K = 6;
 
 const SYSTEM = `You are the Member Assistant for the Houston Livestock Show and Rodeo (HLSR) Souvenir Program Committee. You help committee members in a friendly chat. You draw on two things:
 
@@ -65,7 +65,7 @@ async function embed(text) {
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
   if (!KEY) return json(500, { error: 'Server is missing OPENAI_API_KEY.' });
-  if (!KB.docs.length) return json(503, { error: 'Knowledge base is not built yet.' });
+  if (!KB.chunks.length) return json(503, { error: 'Knowledge base is not built yet.' });
 
   let messages;
   try {
@@ -85,13 +85,13 @@ exports.handler = async (event) => {
 
   try {
     const qVec = await embed(queryText);
-    const ranked = KB.docs
-      .map((d) => ({ d, score: cosine(qVec, d.embedding) }))
+    const ranked = KB.chunks
+      .map((c) => ({ c, score: cosine(qVec, c.embedding) }))
       .sort((a, b) => b.score - a.score)
       .slice(0, TOP_K);
 
     const context = ranked
-      .map((r, i) => `[Doc ${i + 1}] ${r.d.title}\n${r.d.content}`)
+      .map((r) => `[${r.c.title}${r.c.heading ? ' — ' + r.c.heading : ''}]\n${r.c.content}`)
       .join('\n\n---\n\n');
 
     const chatRes = await fetch(`${BASE}/chat/completions`, {
@@ -116,12 +116,20 @@ exports.handler = async (event) => {
     // clarifying question or a "don't have that" response.
     const topScore = ranked[0]?.score ?? 0;
     const answered = !/\?\s*$/.test(reply.trim()) && !/don'?t have (that|it)|not (in|covered)/i.test(reply);
-    const sources = answered
-      ? ranked
-          .filter((r) => r.score >= 0.35 && r.score >= topScore - 0.08)
-          .slice(0, 3)
-          .map((r) => ({ title: r.d.title, url: r.d.source_url }))
-      : [];
+    // Surface parent docs of the strong chunks, deduped (several chunks can come
+    // from one doc), and only when the answer wasn't a clarify or a decline.
+    let sources = [];
+    if (answered) {
+      const seen = new Set();
+      for (const r of ranked) {
+        if (r.score < 0.35 || r.score < topScore - 0.1) continue;
+        const key = `${r.c.title}|${r.c.source_url}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        sources.push({ title: r.c.title, url: r.c.source_url });
+        if (sources.length >= 3) break;
+      }
+    }
 
     // Interaction log (read-only signal for later KB review). Never edits the
     // KB. Wrapped so logging can never affect the response.
@@ -133,7 +141,7 @@ exports.handler = async (event) => {
             ts: new Date().toISOString(),
             q: question,
             disposition,
-            top: ranked.slice(0, 5).map((r) => ({ id: r.d.id, s: Math.round(r.score * 1000) / 1000 })),
+            top: ranked.slice(0, 6).map((r) => ({ id: r.c.doc_id, h: r.c.heading, s: Math.round(r.score * 1000) / 1000 })),
             reply: reply.slice(0, 500),
           })
       );
