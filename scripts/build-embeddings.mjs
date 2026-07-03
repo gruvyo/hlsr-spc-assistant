@@ -35,18 +35,30 @@ function parseDoc(raw, filename) {
   };
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Embed a batch, retrying on rate limits (429) and transient 5xx with backoff.
+// Free-tier embedding quotas (e.g. Google Gemini) are low and reject large
+// batches, so callers keep batches small and we wait out throttling here.
 async function embedBatch(texts) {
-  const res = await fetch(`${BASE}/embeddings`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${KEY}`,
-    },
-    body: JSON.stringify({ model: EMBED_MODEL, input: texts }),
-  });
-  if (!res.ok) throw new Error(`Embeddings API ${res.status}: ${await res.text()}`);
-  const data = await res.json();
-  return data.data.map((d) => d.embedding);
+  const waits = [3000, 6000, 12000, 24000, 48000];
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(`${BASE}/embeddings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
+      body: JSON.stringify({ model: EMBED_MODEL, input: texts }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.data.map((d) => d.embedding);
+    }
+    const retryable = res.status === 429 || res.status >= 500;
+    if (!retryable || attempt >= waits.length) {
+      throw new Error(`Embeddings API ${res.status}: ${await res.text()}`);
+    }
+    console.log(`  throttled (${res.status}), waiting ${waits[attempt] / 1000}s...`);
+    await sleep(waits[attempt]);
+  }
 }
 
 async function main() {
@@ -63,11 +75,12 @@ async function main() {
   const inputs = docs.map((d) => `${d.title}\n\n${d.body}`.slice(0, 8000));
 
   const embeddings = [];
-  const BATCH = 32;
+  const BATCH = 1; // free-tier embedding quotas reject large batches; one at a time
   for (let i = 0; i < inputs.length; i += BATCH) {
     const vecs = await embedBatch(inputs.slice(i, i + BATCH));
     embeddings.push(...vecs);
     console.log(`Embedded ${Math.min(i + BATCH, inputs.length)}/${inputs.length}`);
+    await sleep(250);
   }
 
   const out = {
