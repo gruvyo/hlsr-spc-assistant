@@ -1,6 +1,6 @@
 ---
-id: form-frame-order-2026
-title: "2026 Souvenir Program frame order form"
+id: frame-order-form
+title: "Souvenir Program frame order form"
 category: form
 audience: [members]
 show_year: 2026
@@ -9,20 +9,22 @@ source_file: form-frame-order-2026.pdf
 source_format: pdf
 original_filename: frame-order-2026.pdf
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
-tags: [frame order, frames, ad frame, pricing, square store, payment, david hale, joy maddox, order form]
+source_url: https://dashboard.rodeospc.com/files/frame-order-2026.pdf
+tags: [frame order, frames, ad frame, pricing, square store, payment, david hale, joy maddox, order form, member purchase]
 related: [ref-donor-benefits-2026, form-ad-request-2027]
-summary: "The 2026 order form for buying printed and framed copies of a Souvenir Program ad. Two sizes (5x7 and 11x17), with cash/check and credit/debit prices, plus how to order online and who to call."
+summary: "The order form for buying printed and framed copies of a Souvenir Program ad. This is a member-service purchase (a member buying frames for their own paying clients' prior-year ads), not an ad sale or a donation, and no money goes to HLSR. Two sizes (5x7 and 11x17), with cash/check and credit/debit prices, plus how to order online and who to call."
 last_reviewed: 2026-06-24
 ---
 
-# 2026 Souvenir Program frame order form
+# Souvenir Program frame order form
 
 **Quick answer:** Use this form to order framed copies of a Souvenir Program ad. A 5x7 frame is $22 cash or check ($23 credit or debit) and an 11x17 frame is $29 cash or check ($30 credit or debit). You can also order online at squareup.com/store/rodeoframes. Questions go to David at 832-236-5601 or Joy at 281-381-8396.
 
 ## What this is
 
 A one-page order form for purchasing printed and framed copies of an advertisement that ran in the RODEOHOUSTON Souvenir Program. A member fills in their contact details, lists each ad they want framed (by page number and advertiser name), picks the size and quantity, and pays. The form says to please print, and the year on it is 2026.
+
+**This is a member-service purchase, not an ad sale or a donation.** A frame order is a member buying frames for their own paying clients' prior-year ads, as a courtesy to those clients. No money goes to HLSR, and it does not benefit the Show. Keep it separate from placing an ad (which is the SPC's ad-sales business) and from making a donation. If someone wants to run an ad, use the Ad Request Form; if they want to give, use the donor process. This form is only for buying frames of an ad that already ran.
 
 ## Who to fill out and how to identify the ad
 
@@ -74,6 +76,9 @@ The form has a STOP line that reads "DO NOT CONTINUE PAST THIS LINE." Below it i
 
 **How much does a frame cost?**
 A 5x7 is $22 if you pay by cash or check, or $23 by credit or debit. An 11x17 is $29 by cash or check, or $30 by credit or debit.
+
+**Is ordering a frame the same as buying an ad or donating?**
+No. A frame order is a member-service purchase, usually a member buying frames of their own paying clients' prior-year ads as a courtesy. No money goes to HLSR and it does not benefit the Show. It is not an ad sale and not a donation. To place an ad use the Ad Request Form; to give, use the donor process.
 
 **Can I order frames online?**
 Yes. Go to squareup.com/store/rodeoframes and put the advertiser name and page number in the "Add additional note to merchant" box on the checkout or payment screen.

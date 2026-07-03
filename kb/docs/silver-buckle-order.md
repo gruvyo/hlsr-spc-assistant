@@ -1,5 +1,5 @@
 ---
-id: form-silver-buckle-order-2026-27
+id: silver-buckle-order
 title: "SPC New Western Silver Order Form (Buckles of Texas, 2026-27)"
 category: form
 audience: [members]
@@ -9,10 +9,10 @@ source_file: form-silver-buckle-order-2026-27.pdf
 source_format: pdf
 original_filename: order-form-buckles-of-texas-2026-2027-fill-in-proofs.pdf
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
-tags: [silver, buckle, western silver, jewelry, order form, swag, merchandise, Buckles of Texas, A Cut Above Buckles, vendor order, cuff, money clip, pendant, earrings, badge, hat pick]
-related: [ref-donor-benefits-2026, form-frame-order-2026, template-sales-aid-2026]
-summary: "Order form for the SPC's custom western silver jewelry line made by Buckles of Texas (A Cut Above Buckles). Members order six items (cuff, money clip, pendant, earrings, badge, hat pick) priced 25 to 185 dollars each by emailing the filled form straight to the vendor at bubba@murphybuckles.com or 832-595-7695. The order is a direct transaction between the member and the vendor, not the committee."
+source_url: https://dashboard.rodeospc.com/files/SPC-Murphy-ORDER%20FORM-2026-2027-fill-in_proofs.pdf
+tags: [silver, buckle, western silver, jewelry, order form, swag, merchandise, Buckles of Texas, A Cut Above Buckles, vendor order, cuff, money clip, pendant, earrings, badge, hat pick, member purchase]
+related: [ref-donor-benefits-2026, frame-order-form, template-sales-aid-2026]
+summary: "Order form for the SPC's custom western silver jewelry line made by Buckles of Texas (A Cut Above Buckles). This is a member merchandise purchase made vendor-direct: it does not benefit HLSR and is not an ad sale or a donation. Members order six items (cuff, money clip, pendant, earrings, badge, hat pick) priced 25 to 185 dollars each by emailing the filled form straight to the vendor at bubba@murphybuckles.com or 832-595-7695. The order is a direct transaction between the member and the vendor, not the committee."
 last_reviewed: 2026-06-24
 ---
 
@@ -23,6 +23,8 @@ last_reviewed: 2026-06-24
 ## What this is
 
 A one-page order form, with a second page of design proofs, for the SPC's custom western silver jewelry. The Souvenir Program Committee of HLSR enlisted Buckles of Texas to create specific items so members can buy them if they choose. To purchase, you fill out the order form with quantities and email it directly to Buckles of Texas. The transaction is between you and the vendor. The committee will not be responsible for any items ordered by committee members. The vendor contacts you directly about your order, and you receive an invoice that includes taxes and shipping.
+
+**This is a member merchandise purchase, not an ad sale or a donation.** Buying silver is a member buying jewelry for themselves, vendor-direct. No money goes to HLSR, and it does not benefit the Show. Keep it separate from placing an ad (the SPC's ad-sales business) and from making a donation. To place an ad use the Ad Request Form; to give, use the donor process. This form is only for buying merchandise from the vendor.
 
 The maker is A Cut Above Buckles by Andy Andrews (the proof page carries the "A Cut Above Buckles By Andy Andrews" logo with "Copyright 2023"). Buckles of Texas is the brand on the order form.
 
@@ -78,6 +80,9 @@ Before you approve the artwork, the proof asks you to check for: correct sizing,
 
 ## FAQ
 
+**Is buying the silver the same as buying an ad or donating?**
+No. Ordering silver is a member merchandise purchase, vendor-direct, a member buying jewelry for themselves. No money goes to HLSR and it does not benefit the Show. It is not an ad sale and not a donation. To place an ad use the Ad Request Form; to give, use the donor process.
+
 **How do I order the silver?**
 Fill in the quantities on the order form, add your name, date, and ship-to, then email the completed form to Buckles of Texas at bubba@murphybuckles.com. The vendor invoices you and ships directly.
 
@@ -99,7 +104,7 @@ The cuff is 5.50 inches wide, the money clip is 2.2 by 1.5 inches, the pendant i
 ## Related
 
 - Souvenir Program donor benefit packages, 2026 (`ref-donor-benefits-2026`)
-- 2026 Souvenir Program frame order form (`form-frame-order-2026`)
+- Souvenir Program frame order form (`frame-order-form`)
 - 2026 Sales Aid with Sample Ads (`template-sales-aid-2026`)
 
 ## Source

@@ -81,4 +81,4 @@ The idea is the same but the steps differ. See the InDesign version of this how-
 
 ## Source
 
-Written capture of a video tutorial (on-screen steps plus narration) from `video-save-hires-pdf-illustrator.mp4` (originally `video-how-to-save-hi-resolution-pdf-in-illustrator.mp4`). The video shows the on-screen steps over background music with no spoken narration, so this doc is built from the on-screen instructions and the dialogs shown. Available on the SPC Dashboard under Links, Artwork & contracts section.
+Written capture of a video tutorial (on-screen steps plus narration) from `video-save-hires-pdf-illustrator.mp4` (originally `video-how-to-save-hi-resolution-pdf-in-illustrator.mp4`). The video shows the on-screen steps over background music with no spoken narration, so this doc is built from the on-screen instructions and the dialogs shown. Available on the SPC Dashboard under Links, Artwork & contracts section. Video: https://youtu.be/It8ww6SHuvY

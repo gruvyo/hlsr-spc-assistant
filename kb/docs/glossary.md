@@ -11,7 +11,7 @@ original_filename: derived from the SPC knowledgebase
 portal_location: ""
 source_url: https://dashboard.rodeospc.com
 tags: [glossary, terms, jargon, definitions, rookie, veteran, badge, dues, indemnity, suspect, prospect, protected list, donor, advertiser, scholarship, heartbeat, traditions]
-related: [handbook-volunteer-2026-membership-volunteer-information, salestip-01-prospecting, ref-donor-benefits-2026, heartbeat-how-the-committee-works]
+related: [handbook-volunteer-2026-membership-volunteer-information, salestip-01-prospecting, donor-benefits, heartbeat-how-the-committee-works]
 summary: "A plain-language glossary of Souvenir Program Committee terms a volunteer is likely to ask about, from rookie and veteran to badging, dues, the sales pipeline (suspect to prospect), donor badge tiers, and the committee's recurring events. Each definition is drawn from the SPC knowledgebase and cites a source doc where helpful."
 last_reviewed: 2026-06-24
 ---
@@ -26,7 +26,7 @@ A reference list of committee jargon and named events, drawn from across the SPC
 
 ## Terms
 
-**Advertiser vs donor.** Two different ways a committee member raises money, and both count toward your badge. An advertiser buys ad space in the Souvenir Program (a paid placement, not tax deductible). A donor gives money to the Show's Education Fund (a charitable gift that is tax deductible, with a W-9 available). When an ad is not the right fit for someone, members are encouraged to suggest the ease of a donation instead. (`handbook-rookie-orientation-2024`, `ref-donor-benefits-2026`)
+**Advertiser vs donor.** Two different ways a committee member raises money, and both count toward your badge. An advertiser buys ad space in the Souvenir Program (a paid placement, not tax deductible). A donor gives money to the Show's Education Fund (a charitable gift that is tax deductible, with a W-9 available). When an ad is not the right fit for someone, members are encouraged to suggest the ease of a donation instead. (`handbook-rookie-orientation-2024`, `donor-benefits`)
 
 **Awards Banquet.** The committee's end-of-year celebration, nicknamed Rodeo Prom, where the year's final ad-sales numbers and committee awards are shared. See Rodeo Prom. (`heartbeat-traditions-and-events`)
 
@@ -36,11 +36,11 @@ A reference list of committee jargon and named events, drawn from across the SPC
 
 **Committee (Comm) dues.** The dues paid to the SPC itself, separate from Show dues, at 70 dollars a year. They cover the year's meetings and activities, including food and drinks at meetings and the Rodeo Prom celebration. A member who has not paid by the second meeting is removed from the roster. (`heartbeat-how-the-committee-works`)
 
-**Corral Club.** The Show's member hospitality clubs (for example the NRG Center Committeeman's Club and NRG Arena's Stockman's Club), run under Responsible Alcohol Management rules. Guests must be accompanied by their Corral Club host and leave when the host leaves. Some donor benefit tiers include Corral Club drink cards. (`handbook-member-2026`, `ref-donor-benefits-2026`)
+**Corral Club.** The Show's member hospitality clubs (for example the NRG Center Committeeman's Club and NRG Arena's Stockman's Club), run under Responsible Alcohol Management rules. Guests must be accompanied by their Corral Club host and leave when the host leaves. Some donor benefit tiers include Corral Club drink cards. (`handbook-member-2026`, `donor-benefits`)
 
-**Donor Gold Badge.** A donor benefit badge given at higher donation tiers (one at the 10,000 to 19,999 dollar level, two at the 20,000 dollar Scholarship Donor level), each with a fair market value of 288 dollars. Distinct from the gold badge a member earns by selling. (`ref-donor-benefits-2026`)
+**Donor Gold Badge.** A donor benefit badge given at higher donation tiers (one at the 10,000 to 19,999 dollar level, two at the 20,000 dollar Scholarship Donor level). Distinct from the gold badge a member earns by selling. For the current fair market value and full benefit package, see the donor benefits doc. (`donor-benefits`)
 
-**Donor Silver Badge.** A donor benefit badge, with a fair market value of 75 dollars each. Donors at the 2,000 to 9,999 dollar level receive one per 2,000 dollars donated, with larger counts at higher tiers. (`ref-donor-benefits-2026`)
+**Donor Silver Badge.** A donor benefit badge. Donors at the 2,000 to 9,999 dollar level receive one per 2,000 dollars donated, with larger counts at higher tiers. For the current fair market value and full benefit package, see the donor benefits doc. (`donor-benefits`)
 
 **Frame order.** An order for a printed and framed copy of an ad that ran in the Souvenir Program. Members use the frame order form (5x7 or 11x17 sizes) as a thank-you or sales incentive, often shown to a prospect as a "mock ad." (`form-frame-order-2026`, `handbook-rookie-orientation-2024`)
 
@@ -66,7 +66,7 @@ A reference list of committee jargon and named events, drawn from across the SPC
 
 **Rookie.** A member in their first year on the committee. Rookies attend a Rookie Orientation and have a 1,000 dollar sales minimum to badge. (`handbook-rookie-orientation-2024`, `heartbeat-how-the-committee-works`)
 
-**Scholarship Donor.** The top published donor tier, 20,000 dollars and above. It carries a larger badge and hospitality package plus scholarship recognition, including a scholarship awarded in the donor's recognition name. Donations above 20,000 dollars get custom benefits arranged with HLSR Donor Relations. (`ref-donor-benefits-2026`)
+**Scholarship Donor.** The top published donor tier, 20,000 dollars and above. It carries a larger badge and hospitality package plus scholarship recognition, including a scholarship awarded in the donor's recognition name. Donations above 20,000 dollars get custom benefits arranged with HLSR Donor Relations. For the current benefit package and its fair market values, see the donor benefits doc. (`donor-benefits`)
 
 **Show dues.** The HLSR membership dues a member pays to the Rodeo, separate from Committee dues. They are 50 dollars a year, or 500 dollars for a Lifetime Membership. (`heartbeat-how-the-committee-works`, `handbook-member-2026`)
 
@@ -76,7 +76,7 @@ A reference list of committee jargon and named events, drawn from across the SPC
 
 **Veteran.** A member who is not in their first year on the committee (anyone past their rookie year). Veterans have a 2,000 dollar total sales minimum to badge, and only veterans can join the Distribution sub-committee. (`handbook-rookie-orientation-2024`, `heartbeat-how-the-committee-works`)
 
-**WCBBQ.** The World's Championship Bar-B-Que Contest, a Show event. Some donor benefit tiers include parking passes for WCBBQ, and gold and silver badges allow entry for two into the contest. (`ref-donor-benefits-2026`, `handbook-volunteer-2026-donor-program`)
+**WCBBQ.** The World's Championship Bar-B-Que Contest, a Show event. Some donor benefit tiers include parking passes for WCBBQ, and gold and silver badges allow entry for two into the contest. (`donor-benefits`, `handbook-volunteer-2026-donor-program`)
 
 **Wine Garden.** The Champion Wine Garden, the Show's Rodeo Uncorked! wine event (presented by Frost), pouring wines from the RODEOHOUSTON International Wine Competition. The dashboard carries its menu and a layout map. (`menu-wine-garden-2026`, `map-wine-garden-2026`)
 
@@ -86,4 +86,4 @@ A reference list of committee jargon and named events, drawn from across the SPC
 
 ## Source
 
-Compiled from the SPC knowledgebase, including the rookie and member handbooks (`handbook-rookie-orientation-2024`, `handbook-member-2026`), the Rookie sales tips (`salestip-01-prospecting`, `salestip-02-converting-suspect-to-prospect`), The Heartbeat syntheses (`heartbeat-how-the-committee-works`, `heartbeat-traditions-and-events`), the donor benefit packages (`ref-donor-benefits-2026`), the frame order form (`form-frame-order-2026`), the ad request form (`form-ad-request-2027`), the Wine Garden menu and map, and the dashboard portal pages. Each definition cites the doc to read for more.
+Compiled from the SPC knowledgebase, including the rookie and member handbooks (`handbook-rookie-orientation-2024`, `handbook-member-2026`), the Rookie sales tips (`salestip-01-prospecting`, `salestip-02-converting-suspect-to-prospect`), The Heartbeat syntheses (`heartbeat-how-the-committee-works`, `heartbeat-traditions-and-events`), the donor benefit packages (`donor-benefits`), the frame order form (`form-frame-order-2026`), the ad request form (`form-ad-request-2027`), the Wine Garden menu and map, and the dashboard portal pages. Each definition cites the doc to read for more.

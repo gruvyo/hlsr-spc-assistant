@@ -9,7 +9,7 @@ source_file: template-letterhead-2026-27.dotx
 source_format: dotx
 original_filename: letterhead-committee-2026-27.dotx
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/2026-27%20Committee%20Letterhead.dotx
 tags: [letterhead, template, dotx, branding, official letter, sponsor letter, donor letter, stationery, sharepoint]
 related: [ref-donor-benefits-2026, salestip-04-presentation]
 summary: "The official HLSR Volunteer Letterhead, a Word template (.dotx) with the branded Committee Volunteer header and Western footer. Use it for letters to prospects, donors, and sponsors. Save your own copy somewhere else first and never save over or move the original."

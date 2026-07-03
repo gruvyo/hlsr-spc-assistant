@@ -9,7 +9,7 @@ source_file: form-ad-request-2027.pdf
 source_format: pdf
 original_filename: form-advertiser-intake-2027.pdf
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section (Ad Request Form plus Guidelines)"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/2027%20Advertiser%20Intake%20Form.pdf
 tags: [advertiser, ad form, intake form, ad pricing, page options, reserved page, repeat ad, artwork deadline, net 30, payment, contract, sales member]
 related: [guideline-artwork-specs-2027, ref-donor-benefits-2026]
 summary: "The advertiser intake form a committeeman gives a client to collect their company info and ad selection. It's not an order. The member enters the official contract through the SPC online ordering system, and it lists ad page options, prices, the December 4 2026 new-artwork deadline, and Net 30 payment terms."
@@ -63,6 +63,10 @@ The form has two artwork paths:
 
 - New artwork. The advertiser submits new artwork with a deadline of December 4, 2026.
 - Repeat. Repeat the ad from the previous year. There's a blank to write the page number the ad ran on previously ("REPEAT the Ad from Previous Year on Page # ___").
+
+## Renewals: confirm with the advertiser first
+
+Never renew or resubmit an advertiser's ad without confirming with the advertiser first. Submitting a contract without the customer's knowledge is unauthorized, and a member who does so will be removed from the committee.
 
 ## Payment
 

@@ -9,7 +9,7 @@ source_file: guideline-artwork-specs-2027.pdf
 source_format: pdf
 original_filename: guidelines-2027-souvenir-program.pdf
 portal_location: "Dashboard > Links widget > Artwork & contracts section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/2027%20SOUV%20PROG%20GUIDELINES.pdf
 tags: [artwork, ad specifications, print-ready pdf, deadline, trademark, ad sizes, bleed, cmyk, payment, net 30]
 related: [form-ad-request-2027, video-save-hires-pdf-illustrator, video-save-hires-pdf-indesign, link-artwork-submission]
 summary: "Specs and rules for submitting ad artwork to the 2027 Souvenir Program: print-ready CMYK PDFs up to 30 MB, due Friday December 4 2026, submitted through the online form. No proofs provided. Includes ad sizes, mechanical requirements, trademark rules, and Net 30 payment terms."
@@ -92,9 +92,10 @@ Net 30 days. You'll get an emailed invoice with a PAY NOW link within a month, o
 ## Related
 
 - Ad Request Form plus Guidelines (`form-ad-request-2027`)
-- How to Save a Hi-Res PDF in Illustrator (`video-save-hires-pdf-illustrator`)
+- How to Save a Hi-Res PDF in Illustrator (`video-save-hires-pdf-illustrator`): https://youtu.be/It8ww6SHuvY
 - How to Save a Hi-Res PDF in InDesign (`video-save-hires-pdf-indesign`)
 - Send Artwork to HLSR submission form (`link-artwork-submission`)
+- Print-Ready File Checklist: https://dashboard.rodeospc.com/files/Print-Ready-File-Checklist_20241028.pdf
 
 ## Source
 

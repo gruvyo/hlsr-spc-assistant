@@ -9,7 +9,7 @@ source_file: form-w9-hlsr.pdf
 source_format: pdf
 original_filename: form-irs-w9-hlsr.pdf
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/HLSR%20W9.pdf
 tags: [w9, w-9, tax, ein, taxpayer id, vendor setup, advertiser, accounts payable, irs, tin]
 related: [ref-donor-benefits-2026, form-ad-request-2027]
 summary: "The completed IRS Form W-9 for Houston Livestock Show and Rodeo, Inc, giving the Show's legal name, address, and EIN (74-1142851). Hand this to an advertiser or donor whose accounts payable department needs HLSR's taxpayer info to set up the Show as a payee or process a payment."

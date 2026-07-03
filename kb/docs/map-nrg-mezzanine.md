@@ -9,7 +9,7 @@ source_file: map-nrg-mezzanine.pdf
 source_format: pdf
 original_filename: map-nrg-center-mezzanine-level.pdf
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section (listed as NRG Center 2nd Floor Map)"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://www.nrgpark.com/wp-content/uploads/nrg-center-mezzanine-level.pdf
 tags: [map, nrg center, mezzanine, second floor, meeting rooms, room numbers, cafe on the park, restrooms, elevators, escalators, wayfinding]
 related: [map-wine-garden-2026, menu-wine-garden-2026]
 summary: "Floor map of the NRG Center Mezzanine (second floor), showing the four numbered meeting-room blocks (200, 300, 400, 500/600), Cafe on the Park, lobby and rotunda, and the legend for restrooms, elevators, escalators, stairs, and freight elevators."

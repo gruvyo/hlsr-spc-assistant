@@ -9,7 +9,7 @@ source_file: salestip-03-approaching-a-prospect.doc
 source_format: doc
 original_filename: rookie-sales-tip-3-approaching-a-prospect.doc
 portal_location: "Dashboard > Links widget > Sales training section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/ST3_Rookie%20sales%20tips%20on%20Aproaching%20a%20Prospect.doc
 tags: [approaching a prospect, sales conversation, sales script, opening question, contact method, phone vs in person, HLSR, souvenir program, rookie, sales process]
 related: [salestip-02-converting-suspect-to-prospect, salestip-04-presentation, salestip-01-prospecting]
 summary: "The third Rookie sales tip. Once you have 20 to 30 qualified prospects, this tip walks through how to reach out (phone or in person) and gives a sample sales conversation, with an opening question and three branching responses, that hands off to the presentation in Tip #4."

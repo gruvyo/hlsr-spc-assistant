@@ -9,7 +9,7 @@ source_file: template-sales-aid-2026.docx
 source_format: docx
 original_filename: sales-tool-hlsr-spc-blank.docx
 portal_location: "Dashboard > Links widget > Forms, handbooks & maps section"
-source_url: https://dashboard.rodeospc.com/dashboard.php
+source_url: https://dashboard.rodeospc.com/files/Houston%20Livestock%20Show%20and%20Rodeo%20-%20SPC%20Sales%20tool-Blank.docx
 tags: [sales aid, sample ads, leave behind, ad sizes, ad prices, cover letter, presentation, prospect, deadline, color ad, black and white ad, star ad]
 related: [salestip-04-presentation, guideline-artwork-specs-2027, ref-donor-benefits-2026, form-ad-request-2027, ref-donation-link-instructions]
 summary: "A fill-in-the-blank cover letter plus a set of real sample ads at every size and price, meant to be personalized and left with or shown to a prospect. It explains the two ways to contribute (donation or ad), where the money goes, and lists all ad sizes with prices so a prospect can see exactly what each tier looks like."
@@ -50,6 +50,8 @@ The letter explains how the contribution works, in three points:
 The letter closes with a line about being honored that the prospect made the choice to consider the opportunity to make a difference, signed by the Committee Volunteer.
 
 ## Ad sizes and prices
+
+**2027 update:** the current half-page black-and-white price is $500 (up from $450), and the full-page and quarter-page black-and-white options have been discontinued. Use the Advertiser Information Form for the authoritative current prices. The sample ads below still show the older black-and-white sizes as examples.
 
 The sample ads in the document carry these labels and prices. Each one is shown as a finished, real example so the prospect can see exactly what that tier looks like.
 
