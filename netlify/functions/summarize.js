@@ -1,5 +1,6 @@
 // Brief summary of a chat transcript, for the captain-contact email.
 const KEY = process.env.OPENAI_API_KEY;
+const BASE = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const CHAT_MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
 
 exports.handler = async (event) => {
@@ -17,7 +18,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    const res = await fetch(`${BASE}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
       body: JSON.stringify({

@@ -10,6 +10,9 @@ try {
 }
 
 const KEY = process.env.OPENAI_API_KEY;
+// Base URL is swappable so the app can point at any OpenAI-compatible endpoint
+// (e.g. Google's Gemini API) without code changes. Defaults to OpenAI.
+const BASE = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const EMBED_MODEL = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
 const CHAT_MODEL = process.env.OPENAI_CHAT_MODEL || 'gpt-4o-mini';
 const TOP_K = 5;
@@ -49,7 +52,7 @@ function cosine(a, b) {
 }
 
 async function embed(text) {
-  const res = await fetch('https://api.openai.com/v1/embeddings', {
+  const res = await fetch(`${BASE}/embeddings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
     body: JSON.stringify({ model: EMBED_MODEL, input: text }),
@@ -91,7 +94,7 @@ exports.handler = async (event) => {
       .map((r, i) => `[Doc ${i + 1}] ${r.d.title}\n${r.d.content}`)
       .join('\n\n---\n\n');
 
-    const chatRes = await fetch('https://api.openai.com/v1/chat/completions', {
+    const chatRes = await fetch(`${BASE}/chat/completions`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${KEY}` },
       body: JSON.stringify({

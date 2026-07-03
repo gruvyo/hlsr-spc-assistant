@@ -13,6 +13,7 @@ const DOCS_DIR = join(ROOT, 'kb', 'docs');
 const OUT = join(ROOT, 'netlify', 'functions', 'embeddings.json');
 
 const KEY = process.env.OPENAI_API_KEY;
+const BASE = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
 const EMBED_MODEL = process.env.OPENAI_EMBED_MODEL || 'text-embedding-3-small';
 
 // Pull the frontmatter fields we need, without a YAML dependency.
@@ -35,7 +36,7 @@ function parseDoc(raw, filename) {
 }
 
 async function embedBatch(texts) {
-  const res = await fetch('https://api.openai.com/v1/embeddings', {
+  const res = await fetch(`${BASE}/embeddings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
