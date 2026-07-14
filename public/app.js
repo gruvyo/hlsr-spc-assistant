@@ -49,6 +49,13 @@
     bubble.innerHTML = DOMPurify.sanitize(marked.parse(reply || ''));
   }
 
+  // Safety net: strip a stray "[Name]" that isn't followed by "(url)" so a model
+  // slip never renders as broken link text. Applied only to the finished reply
+  // (not mid-stream, where the "(url)" may not have arrived yet).
+  function tidyLinks(md) {
+    return md.replace(/\[([^\]\n]+)\](?!\()/g, '$1');
+  }
+
   async function ask(text) {
     if (starters) starters.remove();
     const userEl = addUser(text);
@@ -80,7 +87,7 @@
         // from the beginning (once the content is tall enough to scroll).
         anchorQuestion(userEl);
       }
-      if (!full) renderAnswer(bubble, 'Sorry — I could not generate a reply. Please try again.');
+      renderAnswer(bubble, full ? tidyLinks(full) : 'Sorry — I could not generate a reply. Please try again.');
       anchorQuestion(userEl);
       history.push({ role: 'assistant', content: full });
     } catch (err) {
