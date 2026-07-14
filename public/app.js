@@ -14,6 +14,13 @@
     log.scrollTop = log.scrollHeight;
   }
 
+  // Scroll the log so the user's question sits at the top, so the answer that
+  // follows reads from its beginning and the reader doesn't have to scroll back
+  // up. Explicit math (not scrollIntoView, which is unreliable in a flex column).
+  function anchorQuestion(el) {
+    log.scrollTop += el.getBoundingClientRect().top - log.getBoundingClientRect().top - 8;
+  }
+
   function addUser(text) {
     const wrap = document.createElement('div');
     wrap.className = 'msg user';
@@ -23,6 +30,7 @@
     wrap.appendChild(bubble);
     log.appendChild(wrap);
     scrollDown();
+    return wrap;
   }
 
   function addBotShell() {
@@ -44,7 +52,7 @@
 
   async function ask(text) {
     if (starters) starters.remove();
-    addUser(text);
+    const userEl = addUser(text);
     history.push({ role: 'user', content: text });
     const bubble = addBotShell();
 
@@ -62,6 +70,7 @@
       bubble.textContent =
         'The assistant is unavailable right now. Please try again shortly.';
     }
+    anchorQuestion(userEl);
   }
 
   form.addEventListener('submit', (e) => {
