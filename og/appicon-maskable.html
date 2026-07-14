@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+  Source for the home-screen / PWA app icons: the logo on a white tile (iOS
+  masks the corners itself, so this is a full-bleed square). Re-render from the
+  app/ directory:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
+      --window-size=512,512 --screenshot="public/icon-512.png" \
+      "file://$PWD/og/appicon.html"
+    sips -z 192 192 public/icon-512.png --out public/icon-192.png
+    sips -z 180 180 public/icon-512.png --out public/apple-touch-icon.png
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 512px; height: 512px; }
+  body { background: #fefeff; display: grid; place-items: center; }
+  img { width: 300px; height: 300px; object-fit: contain; }
+</style>
+</head>
+<body>
+  <img src="../public/logo.svg" alt="">
+</body>
+</html>

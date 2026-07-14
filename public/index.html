@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>SPC Member Assistant</title>
   <meta name="description" content="The Houston Livestock Show and Rodeo Souvenir Program Committee member assistant. Ask about forms, deadlines, ad ordering, and committee procedures, answered from the committee knowledge base." />
+  <meta name="robots" content="noindex" />
   <link rel="icon" href="logo.svg" />
   <!-- Home-screen / PWA install -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -28,9 +29,7 @@
   <meta name="twitter:title" content="SPC Member Assistant" />
   <meta name="twitter:description" content="Ask about forms, deadlines, ad ordering, and committee procedures. Answered from the Souvenir Program Committee knowledge base." />
   <meta name="twitter:image" content="https://hlsr-spc-assistant.vercel.app/og.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fonts/archivo.css" />
   <!-- Apply a saved theme override before paint, so there's no flash. -->
   <script>
     (function () {
@@ -168,8 +167,8 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
