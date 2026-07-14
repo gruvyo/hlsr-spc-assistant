@@ -24,6 +24,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Apply a saved theme override before paint, so there's no flash. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('spc-theme');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -34,6 +43,7 @@
         <p class="app-name">Souvenir Program Committee</p>
         <p class="app-sub"><span class="dot"></span>Member Assistant</p>
       </div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
       <button class="captain-btn" id="captain-open" type="button">Contact Admin</button>
     </header>
 

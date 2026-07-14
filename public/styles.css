@@ -1,4 +1,5 @@
 :root {
+  /* Brand palette (fixed across themes) */
   --shadow-grey: #231f20;
   --pumpkin: #ee7624;
   --pumpkin-deep: #b85212; /* dark enough for white text at WCAG AA */
@@ -6,12 +7,53 @@
   --glaucous: #5b79af;
   --black-cherry: #611316;
   --pearl: #f0e3ba;
+  --sans: "Archivo", system-ui, sans-serif;
 
-  --bg: #f4f1ea;
+  /* Semantic tokens — light theme (the default) */
+  --bg: #f4f1ea;            /* app shell background behind bubbles and inputs */
+  --surface: #fefeff;       /* raised surfaces: app card, composer, sheet, starters */
+  --surface-hover: #fff7f0;
   --ink: #231f20;
   --muted: #6f6a66;
   --line: #e3ddd2;
-  --sans: "Archivo", system-ui, sans-serif;
+  --bot-bubble: #f0e3ba;
+  --bot-bubble-ink: #231f20;
+  --link: #611316;
+  --th-bg: rgba(35, 31, 32, 0.06);
+  --td-border: rgba(35, 31, 32, 0.18);
+  --header-border: rgba(255, 255, 255, 0.35);
+  --header-hover: rgba(255, 255, 255, 0.12);
+}
+
+/* Dark theme — used when the system prefers dark AND the user hasn't overridden,
+   or when the user explicitly chose dark via the header toggle. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #15120f;
+    --surface: #201b17;
+    --surface-hover: #2a231d;
+    --ink: #ece9e3;
+    --muted: #a69e94;
+    --line: #372f28;
+    --bot-bubble: #2c2620;
+    --bot-bubble-ink: #ece9e3;
+    --link: #f0a868;
+    --th-bg: rgba(255, 255, 255, 0.06);
+    --td-border: rgba(255, 255, 255, 0.14);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15120f;
+  --surface: #201b17;
+  --surface-hover: #2a231d;
+  --ink: #ece9e3;
+  --muted: #a69e94;
+  --line: #372f28;
+  --bot-bubble: #2c2620;
+  --bot-bubble-ink: #ece9e3;
+  --link: #f0a868;
+  --th-bg: rgba(255, 255, 255, 0.06);
+  --td-border: rgba(255, 255, 255, 0.14);
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +75,7 @@ body {
   height: 100dvh;
   max-width: 640px;
   margin: 0 auto;
-  background: var(--white);
+  background: var(--surface);
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.08);
 }
 
@@ -106,8 +148,8 @@ body {
 }
 
 .msg.bot .bubble {
-  background: var(--pearl);
-  color: var(--ink);
+  background: var(--bot-bubble);
+  color: var(--bot-bubble-ink);
   border-bottom-left-radius: 5px;
 }
 
@@ -123,7 +165,7 @@ body {
 .bubble ul, .bubble ol { margin: 0.4rem 0; padding-left: 1.25rem; }
 .bubble li { margin-bottom: 0.25rem; }
 .bubble strong { font-weight: 700; }
-.bubble a { color: var(--black-cherry); text-decoration: underline; }
+.bubble a { color: var(--link); text-decoration: underline; }
 
 /* Markdown tables inside answers */
 .bubble table {
@@ -133,11 +175,11 @@ body {
   font-size: 0.9rem;
 }
 .bubble th, .bubble td {
-  border: 1px solid rgba(35, 31, 32, 0.18);
+  border: 1px solid var(--td-border);
   padding: 0.4rem 0.6rem;
   text-align: left;
 }
-.bubble th { background: rgba(35, 31, 32, 0.06); font-weight: 700; }
+.bubble th { background: var(--th-bg); font-weight: 700; }
 
 /* Typing indicator */
 .typing span {
@@ -152,24 +194,6 @@ body {
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes blink { 0%, 80%, 100% { opacity: 0.3; } 40% { opacity: 1; } }
 
-/* ---- Sources dropdown ---- */
-.sources {
-  margin-top: 0.55rem;
-  font-size: 0.82rem;
-}
-.sources summary {
-  cursor: pointer;
-  color: var(--black-cherry);
-  font-weight: 600;
-  list-style: none;
-}
-.sources summary::-webkit-details-marker { display: none; }
-.sources summary::before { content: "▸ "; }
-.sources[open] summary::before { content: "▾ "; }
-.sources ul { margin: 0.5rem 0 0; padding-left: 1.1rem; }
-.sources li { margin-bottom: 0.3rem; }
-.sources a { color: var(--black-cherry); }
-
 /* ---- Starters ---- */
 .starters {
   display: flex;
@@ -179,7 +203,7 @@ body {
 }
 .starter {
   border: 1px solid var(--line);
-  background: var(--white);
+  background: var(--surface);
   color: var(--ink);
   border-radius: 2rem;
   padding: 0.5rem 0.9rem;
@@ -188,7 +212,7 @@ body {
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-.starter:hover { border-color: var(--pumpkin); background: #fff7f0; }
+.starter:hover { border-color: var(--pumpkin); background: var(--surface-hover); }
 
 /* ---- Composer ---- */
 .composer {
@@ -197,7 +221,7 @@ body {
   padding: 0.75rem 0.9rem;
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
-  background: var(--white);
+  background: var(--surface);
   flex-shrink: 0;
 }
 .composer-input {
@@ -207,9 +231,10 @@ body {
   padding: 0.8rem 1.1rem;
   font-family: var(--sans);
   font-size: 1rem;
+  color: var(--ink);
   background: var(--bg);
 }
-.composer-input:focus { outline: none; border-color: var(--glaucous); background: var(--white); }
+.composer-input:focus { outline: none; border-color: var(--glaucous); background: var(--surface); }
 .composer-send {
   flex-shrink: 0;
   width: 46px; height: 46px;
@@ -225,13 +250,29 @@ body {
 .composer-send:hover { background: #a84a10; }
 .composer-send:disabled { opacity: 0.5; cursor: default; }
 
-/* ---- Contact captain ---- */
-.captain-btn {
+::placeholder { color: var(--muted); opacity: 1; }
+
+/* ---- Header buttons: theme toggle + contact ---- */
+.theme-toggle {
   margin-left: auto;
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--header-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.theme-toggle:hover { background: var(--header-hover); border-color: var(--white); }
+.theme-toggle svg { width: 18px; height: 18px; }
+
+.captain-btn {
   flex-shrink: 0;
   background: transparent;
   color: var(--white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--header-border);
   border-radius: 2rem;
   padding: 0.5rem 0.95rem;
   font-family: var(--sans);
@@ -240,18 +281,19 @@ body {
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-.captain-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--white); }
+.captain-btn:hover { background: var(--header-hover); border-color: var(--white); }
 
+/* ---- Contact modal ---- */
 .modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; }
 .modal[hidden] { display: none; }
-.modal-overlay { position: absolute; inset: 0; background: rgba(35, 31, 32, 0.55); }
+.modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); }
 
 .sheet {
   position: relative;
   width: min(440px, calc(100vw - 2rem));
   max-height: calc(100dvh - 2rem);
   overflow-y: auto;
-  background: var(--white);
+  background: var(--surface);
   border-radius: 16px;
   padding: 1.4rem;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
@@ -270,13 +312,9 @@ body {
 }
 .field input, .field textarea {
   border: 1px solid var(--line); border-radius: 10px; padding: 0.7rem 0.85rem;
-  font-family: var(--sans); font-size: 0.98rem; background: var(--bg); resize: vertical;
+  font-family: var(--sans); font-size: 0.98rem; color: var(--ink); background: var(--bg); resize: vertical;
 }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--glaucous); background: var(--white); }
-
-.cap-match { font-size: 0.85rem; font-weight: 600; min-height: 1.1em; }
-.cap-match.found { color: var(--black-cherry); }
-.cap-match.missing { color: #9a3b1a; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--glaucous); background: var(--surface); }
 
 .check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--ink); cursor: pointer; }
 .check input { width: 16px; height: 16px; accent-color: var(--pumpkin); }
@@ -290,7 +328,7 @@ body {
 
 .cap-sent { display: flex; flex-direction: column; gap: 1rem; }
 .cap-banner {
-  background: var(--pearl); color: var(--black-cherry); font-weight: 600;
+  background: var(--bot-bubble); color: var(--link); font-weight: 600;
   border-radius: 10px; padding: 0.7rem 0.9rem; margin: 0; font-size: 0.9rem;
 }
 .cap-preview {
