@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Document — SPC Member Assistant</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="logo.svg" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#231f20" />
+  <!-- Apply a saved theme override before paint, so there's no flash. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('spc-theme');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="fonts/archivo.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .v-header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.7rem 1rem; padding-top: max(0.7rem, env(safe-area-inset-top));
+      background: var(--shadow-grey); color: var(--white);
+    }
+    .v-back {
+      color: var(--white); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      border: 1px solid var(--header-border); border-radius: 2rem; padding: 0.45rem 0.85rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .v-back:hover { background: var(--header-hover); }
+    .v-title {
+      font-weight: 700; font-size: 0.98rem; line-height: 1.2;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
+    }
+    .v-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+    .v-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: var(--pumpkin-deep); color: #fff; border: none; border-radius: 2rem;
+      padding: 0.5rem 0.95rem; font-family: var(--sans); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+    }
+    .v-btn.ghost { background: transparent; border: 1px solid var(--header-border); }
+    .v-btn:hover { filter: brightness(1.05); }
+    .v-editable {
+      background: var(--bot-bubble); color: var(--bot-bubble-ink);
+      padding: 0.6rem 1rem; font-size: 0.88rem; text-align: center;
+    }
+    .v-editable a { color: var(--link); font-weight: 600; }
+    .v-pages {
+      max-width: 820px; margin: 0 auto; padding: 1.1rem;
+      display: flex; flex-direction: column; gap: 1.1rem;
+    }
+    .v-pages img {
+      width: 100%; height: auto; display: block; border-radius: 8px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18); background: #fff;
+    }
+    .v-msg { max-width: 620px; margin: 3rem auto; padding: 0 1.25rem; text-align: center; color: var(--muted); }
+    .v-toast {
+      position: fixed; left: 50%; bottom: 2rem; transform: translateX(-50%);
+      background: var(--shadow-grey); color: #fff; padding: 0.6rem 1.1rem; border-radius: 2rem;
+      font-size: 0.85rem; opacity: 0; transition: opacity 0.2s ease; pointer-events: none; z-index: 20;
+    }
+    .v-toast.show { opacity: 1; }
+    /* Tighten the header on phones so the title isn't squeezed to nothing. */
+    @media (max-width: 520px) {
+      .v-header { gap: 0.5rem; padding-left: 0.7rem; padding-right: 0.7rem; }
+      .v-back { padding: 0.45rem 0.7rem; font-size: 0; }
+      .v-back::before { content: "\2190"; font-size: 1.1rem; }
+      .v-btn { padding: 0.5rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="v-header">
+    <a class="v-back" href="/">← Assistant</a>
+    <span class="v-title" id="v-title">Loading…</span>
+    <div class="v-actions">
+      <a class="v-btn" id="v-download" download>Download</a>
+      <button class="v-btn ghost" id="v-share" type="button">Share</button>
+    </div>
+  </header>
+  <div class="v-editable" id="v-editable" hidden></div>
+  <main class="v-pages" id="v-pages"></main>
+  <div class="v-toast" id="v-toast"></div>
+
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const id = new URLSearchParams(location.search).get('doc');
+      const titleEl = $('v-title'), pagesEl = $('v-pages'), dlEl = $('v-download');
+
+      function toast(msg) {
+        const t = $('v-toast'); t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 1800);
+      }
+      function fail(msg) {
+        titleEl.textContent = 'Document';
+        pagesEl.innerHTML = '<div class="v-msg">' + msg + ' <a href="/">Back to the assistant</a></div>';
+        $('v-share').hidden = true; dlEl.hidden = true;
+      }
+
+      fetch('/resources/viewer-manifest.json')
+        .then((r) => r.json())
+        .then((manifest) => {
+          const doc = id && manifest[id];
+          if (!doc) return fail('That document could not be found.');
+
+          document.title = doc.title + ' — SPC Member Assistant';
+          titleEl.textContent = doc.title;
+          dlEl.href = doc.pdf;
+
+          if (doc.editableUrl) {
+            const bar = $('v-editable'); bar.hidden = false;
+            const a = document.createElement('a');
+            a.href = doc.editableUrl; a.target = '_blank'; a.rel = 'noopener';
+            a.textContent = doc.editableLabel || 'Editable version';
+            bar.append('Need to fill it in? ', a);
+          }
+
+          doc.pages.forEach((src, i) => {
+            const img = new Image();
+            img.src = src; img.alt = 'Page ' + (i + 1); img.loading = 'lazy';
+            pagesEl.appendChild(img);
+          });
+
+          $('v-share').addEventListener('click', async () => {
+            const url = location.href;
+            if (navigator.share) {
+              try { await navigator.share({ title: doc.title, url }); } catch (e) {}
+            } else {
+              try { await navigator.clipboard.writeText(url); toast('Link copied'); }
+              catch (e) { toast(url); }
+            }
+          });
+        })
+        .catch(() => fail('This document could not be loaded.'));
+    })();
+  </script>
+</body>
+</html>

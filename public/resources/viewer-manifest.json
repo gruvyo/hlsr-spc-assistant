@@ -1,0 +1,19 @@
+{
+  "template-sales-aid-2026": {
+    "title": "Sales aid with sample ads (2026)",
+    "pdf": "/resources/template-sales-aid-2026.pdf",
+    "pages": [
+      "/resources/template-sales-aid-2026/page-1.jpg",
+      "/resources/template-sales-aid-2026/page-2.jpg",
+      "/resources/template-sales-aid-2026/page-3.jpg",
+      "/resources/template-sales-aid-2026/page-4.jpg",
+      "/resources/template-sales-aid-2026/page-5.jpg",
+      "/resources/template-sales-aid-2026/page-6.jpg",
+      "/resources/template-sales-aid-2026/page-7.jpg",
+      "/resources/template-sales-aid-2026/page-8.jpg",
+      "/resources/template-sales-aid-2026/page-9.jpg"
+    ],
+    "editableUrl": "https://dashboard.rodeospc.com/files/Houston%20Livestock%20Show%20and%20Rodeo%20-%20SPC%20Sales%20tool-Blank.docx",
+    "editableLabel": "Editable Word version (to personalize)"
+  }
+}
