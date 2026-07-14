@@ -15,6 +15,9 @@ const nodemailer = require('nodemailer');
 
 const TO = 'joe@gruvyo.com';
 const FROM = 'SPC Member Assistant <joe@gruvyo.com>';
+// Optional CC (e.g. the committee chairman), kept in an env var so a personal
+// address never lands in this public repo. Set CONTACT_CC in the host env.
+const CC = (process.env.CONTACT_CC && process.env.CONTACT_CC.trim()) || undefined;
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -66,6 +69,7 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: FROM,
       to: TO,
+      cc: CC,
       replyTo: email.trim() ? `${name.trim()} <${email.trim()}>` : undefined,
       subject: `SPC Assistant — message from ${name.trim()}`,
       text,
