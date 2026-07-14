@@ -9,7 +9,7 @@ source_file: salestip-04-presentation.doc
 source_format: doc
 original_filename: rookie-sales-tip-4-presentation.doc
 portal_location: "Dashboard > Links widget > Sales training section"
-source_url: https://dashboard.rodeospc.com/files/ST4_Rookie%20sales%20tips%20on%20Presentation.doc
+source_url: https://hlsr-spc-assistant.vercel.app/resources/salestip-04-presentation.pdf
 tags: [presentation, sales process, ad sales, sample book, three-ring binder, talking points, closing, advertisers index, rookie, veteran]
 related: [salestip-03-approaching-a-prospect, salestip-05-handling-objections, ref-donor-benefits-2026, template-sales-aid-2026]
 summary: "The fourth Rookie sales tip. How to prepare a three-ring sample binder and what to say when you present an ad to a qualified prospect, including the suggested script and the close. The big secret is no sales pitch is needed because people want to buy, they just need help along."

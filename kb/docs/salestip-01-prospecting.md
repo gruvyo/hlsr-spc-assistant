@@ -9,7 +9,7 @@ source_file: salestip-01-prospecting.doc
 source_format: doc
 original_filename: rookie-sales-tip-1-prospecting.doc
 portal_location: "Dashboard > Links widget > Sales training section"
-source_url: https://dashboard.rodeospc.com/files/ST1_Rookie%20sales%20tips%20on%20Prospecting.doc
+source_url: https://hlsr-spc-assistant.vercel.app/resources/salestip-01-prospecting.pdf
 tags: [prospecting, suspects, badge run, sales process, lead generation, rookie, veteran]
 related: [salestip-02-converting-suspect-to-prospect, handbook-rookie-orientation-2024]
 summary: "The first Rookie sales tip and the start of the Badge Run. How to build a starting list of 20 to 30 names (called suspects) by asking yourself who you'd call for everyday needs, instead of guessing who will buy an ad."

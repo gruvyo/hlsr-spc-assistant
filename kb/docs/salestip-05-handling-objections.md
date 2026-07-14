@@ -9,7 +9,7 @@ source_file: salestip-05-handling-objections.doc
 source_format: doc
 original_filename: rookie-sales-tip-5-handling-objections.doc
 portal_location: "Dashboard > Links widget > Sales training section"
-source_url: https://dashboard.rodeospc.com/files/ST5_Rookie%20sales%20tips%20on%20Handling%20Objections.doc
+source_url: https://hlsr-spc-assistant.vercel.app/resources/salestip-05-handling-objections.pdf
 tags: [objections, closing, asking for the order, fatal alternative close, either or close, delay, transfer, excuse, negate, qualifying questions, FAQ card, fact card, signature, rookie, veteran]
 related: [salestip-04-presentation, salestip-01-prospecting]
 summary: "The fifth and final Rookie sales tip. How to handle questions and objections after you ask for the order. Treat an objection as a request for more information, paraphrase it, answer it, then ask for the order again. Includes the fatal alternative close and a script for the I want to think about it stall."

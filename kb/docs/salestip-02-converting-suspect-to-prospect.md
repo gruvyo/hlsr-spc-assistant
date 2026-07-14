@@ -9,7 +9,7 @@ source_file: salestip-02-converting-suspect-to-prospect.doc
 source_format: doc
 original_filename: rookie-sales-tip-2-converting-a-suspect-to-a-prospect.doc
 portal_location: "Dashboard > Links widget > Sales training section"
-source_url: https://dashboard.rodeospc.com/files/ST2_Rookie%20sales%20tips%20on%20Converting%20a%20Suspect%20to%20a%20Prospect.doc
+source_url: https://hlsr-spc-assistant.vercel.app/resources/salestip-02-converting-suspect-to-prospect.pdf
 tags: [prospecting, sales process, suspect, prospect, qualifying, protected list, rookie]
 related: [salestip-01-prospecting, salestip-03-approaching-a-prospect, handbook-rookie-orientation-2024]
 summary: "How to qualify a suspect into a sales prospect in three steps: confirm they aren't already a Souvenir Program advertiser or on the Protected List, gather their company details, then check last year's program for competitors."

@@ -99,7 +99,7 @@
   });
 
   document.querySelectorAll('.starter').forEach((b) => {
-    b.addEventListener('click', () => ask(b.textContent));
+    b.addEventListener('click', () => ask(b.dataset.query || b.textContent));
   });
 
   // ---- Shared dialog behavior: focus save/restore, Escape-to-close, focus trap ----
