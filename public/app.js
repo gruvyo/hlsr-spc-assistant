@@ -47,7 +47,6 @@
 
   function renderAnswer(bubble, reply) {
     bubble.innerHTML = DOMPurify.sanitize(marked.parse(reply || ''));
-    scrollDown();
   }
 
   async function ask(text) {
@@ -62,15 +61,32 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: history }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Request failed');
-      renderAnswer(bubble, data.reply);
-      history.push({ role: 'assistant', content: data.reply || '' });
+      if (!res.ok || !res.body) {
+        let msg = 'Request failed';
+        try { msg = (await res.json()).error || msg; } catch (e) {}
+        throw new Error(msg);
+      }
+      // Stream the reply in, rendering markdown as it grows. Anchor the question
+      // to the top on the first tokens so the answer reads from its beginning.
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let full = '';
+      let anchored = false;
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        full += decoder.decode(value, { stream: true });
+        renderAnswer(bubble, full);
+        if (!anchored) { anchorQuestion(userEl); anchored = true; }
+      }
+      if (!full) renderAnswer(bubble, 'Sorry — I could not generate a reply. Please try again.');
+      if (!anchored) anchorQuestion(userEl);
+      history.push({ role: 'assistant', content: full });
     } catch (err) {
       bubble.textContent =
         'The assistant is unavailable right now. Please try again shortly.';
+      anchorQuestion(userEl);
     }
-    anchorQuestion(userEl);
   }
 
   form.addEventListener('submit', (e) => {
@@ -83,6 +99,34 @@
 
   document.querySelectorAll('.starter').forEach((b) => {
     b.addEventListener('click', () => ask(b.textContent));
+  });
+
+  // ---- Shared dialog behavior: focus save/restore, Escape-to-close, focus trap ----
+  let openDialogEl = null;
+  let dialogPrevFocus = null;
+  function openDialog(el, focusEl) {
+    dialogPrevFocus = document.activeElement;
+    openDialogEl = el;
+    el.hidden = false;
+    (focusEl || el.querySelector('input:not([tabindex="-1"]), textarea, button')).focus();
+  }
+  function closeDialog(el) {
+    el.hidden = true;
+    if (openDialogEl === el) openDialogEl = null;
+    if (dialogPrevFocus && dialogPrevFocus.focus) dialogPrevFocus.focus();
+    dialogPrevFocus = null;
+  }
+  document.addEventListener('keydown', (e) => {
+    if (!openDialogEl) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeDialog(openDialogEl); return; }
+    if (e.key !== 'Tab') return;
+    const items = Array.from(openDialogEl.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((el) => el.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   // ---- Contact Admin ----
@@ -98,10 +142,9 @@
     capForm.hidden = false;
     capSent.hidden = true;
     capForm.reset();
-    modal.hidden = false;
-    nameEl.focus();
+    openDialog(modal, nameEl);
   }
-  function closeModal() { modal.hidden = true; }
+  function closeModal() { closeDialog(modal); }
 
   function transcript() {
     if (!history.length) return '(No conversation yet.)';
@@ -166,10 +209,9 @@
     bugForm.hidden = false;
     bugSent.hidden = true;
     bugForm.reset();
-    bugModal.hidden = false;
-    bugMsgEl.focus();
+    openDialog(bugModal, bugMsgEl);
   }
-  function closeBug() { bugModal.hidden = true; }
+  function closeBug() { closeDialog(bugModal); }
 
   bugForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -209,8 +251,8 @@
   // A confirm step before the bug form opens, so the small link isn't acted on
   // by accident.
   const bugConfirm = document.getElementById('bugconfirm-modal');
-  const closeBugConfirm = () => { bugConfirm.hidden = true; };
-  document.getElementById('bug-open').addEventListener('click', () => { bugConfirm.hidden = false; });
+  const closeBugConfirm = () => { closeDialog(bugConfirm); };
+  document.getElementById('bug-open').addEventListener('click', () => { openDialog(bugConfirm); });
   document.getElementById('bugconfirm-close').addEventListener('click', closeBugConfirm);
   document.getElementById('bugconfirm-overlay').addEventListener('click', closeBugConfirm);
   document.getElementById('bugconfirm-cancel').addEventListener('click', closeBugConfirm);

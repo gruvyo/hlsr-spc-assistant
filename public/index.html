@@ -56,7 +56,7 @@
       </div>
     </header>
 
-    <div class="chat-log" id="chat-log">
+    <div class="chat-log" id="chat-log" role="log" aria-live="polite" aria-atomic="false">
       <div class="msg bot">
         <div class="bubble">
           <p>Howdy! I'm the Souvenir Program Committee assistant. Ask me about forms, deadlines, ad ordering, or committee procedures and I'll answer from the committee knowledge base.</p>
@@ -80,9 +80,9 @@
   <!-- Contact Admin -->
   <div class="modal" id="captain-modal" hidden>
     <div class="modal-overlay" id="captain-overlay"></div>
-    <div class="sheet">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="captain-title">
       <div class="sheet-head">
-        <p class="sheet-title">Contact an administrator</p>
+        <p class="sheet-title" id="captain-title">Contact an administrator</p>
         <button class="sheet-close" id="captain-close" type="button" aria-label="Close">&times;</button>
       </div>
 
@@ -119,9 +119,9 @@
   <!-- Confirm before opening the bug form -->
   <div class="modal" id="bugconfirm-modal" hidden>
     <div class="modal-overlay" id="bugconfirm-overlay"></div>
-    <div class="sheet">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="bugconfirm-title">
       <div class="sheet-head">
-        <p class="sheet-title">Submit a bug?</p>
+        <p class="sheet-title" id="bugconfirm-title">Submit a bug?</p>
         <button class="sheet-close" id="bugconfirm-close" type="button" aria-label="Close">&times;</button>
       </div>
       <p class="confirm-text">Are you sure you want to submit a bug report?</p>
@@ -135,9 +135,9 @@
   <!-- Submit a bug -->
   <div class="modal" id="bug-modal" hidden>
     <div class="modal-overlay" id="bug-overlay"></div>
-    <div class="sheet">
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="bug-title">
       <div class="sheet-head">
-        <p class="sheet-title">Submit a bug</p>
+        <p class="sheet-title" id="bug-title">Submit a bug</p>
         <button class="sheet-close" id="bug-close" type="button" aria-label="Close">&times;</button>
       </div>
 

@@ -65,17 +65,7 @@ exports.handler = async (event) => {
   const question = [...messages].reverse().find((m) => m.role === 'user')?.content?.trim();
   if (!question) return json(400, { error: 'No question.' });
 
-  // Keep the last few turns so a follow-up stays on topic without a huge prompt.
-  const trimmed = messages.slice(-8).map((m) => ({
-    role: m.role === 'assistant' ? 'assistant' : 'user',
-    content: String(m.content || '').slice(0, 4000),
-  }));
-  const today = new Date().toISOString().slice(0, 10);
-  const dateNote = {
-    role: 'user',
-    content: `(Today's date is ${today}. For "next meeting" or upcoming-deadline questions, compare dates against today and pick the next one still to come.)`,
-  };
-  const outgoing = [{ role: 'system', content: SYSTEM }, dateNote, ...trimmed];
+  const outgoing = buildOutgoing(messages);
 
   try {
     const res = await fetch(`${BASE}/chat/completions`, {
@@ -110,3 +100,22 @@ exports.handler = async (event) => {
 function json(statusCode, obj) {
   return { statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) };
 }
+
+// Build the provider message array (system + KB, a date note, and the last few
+// turns). Shared by the buffered handler above and the streaming api/ask.js.
+function buildOutgoing(messages) {
+  const trimmed = messages.slice(-8).map((m) => ({
+    role: m.role === 'assistant' ? 'assistant' : 'user',
+    content: String(m.content || '').slice(0, 4000),
+  }));
+  const today = new Date().toISOString().slice(0, 10);
+  const dateNote = {
+    role: 'user',
+    content: `(Today's date is ${today}. For "next meeting" or upcoming-deadline questions, compare dates against today and pick the next one still to come.)`,
+  };
+  return [{ role: 'system', content: SYSTEM }, dateNote, ...trimmed];
+}
+
+module.exports.PROVIDER = { get KEY() { return KEY; }, BASE, MODEL };
+module.exports.buildOutgoing = buildOutgoing;
+module.exports.straighten = straighten;
