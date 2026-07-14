@@ -1,0 +1,13 @@
+{
+  "name": "SPC Member Assistant",
+  "short_name": "SPC Assistant",
+  "description": "Houston Livestock Show and Rodeo Souvenir Program Committee member assistant.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#231f20",
+  "theme_color": "#231f20",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
