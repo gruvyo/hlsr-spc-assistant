@@ -1,22 +1,26 @@
-// Serverless function for the "Contact Admin" form.
+// Serverless function for the "Contact Admin" and "Submit a bug" forms.
 // Vercel builds any file in a root /api folder into a serverless function; the
 // front end posts to /.netlify/functions/contact, which vercel.json rewrites to
 // /api/contact, so the same call works on either host.
 //
 // It sends each message through Joe's own Google Workspace over SMTP
 // (authenticated as GMAIL_USER with a Google App Password) — the same pattern as
-// the gruvyo.com contact form. The mail is From/To joe@gruvyo.com and Reply-To
-// the member (when they give an email), so a reply goes straight back to them.
+// the gruvyo.com contact form. Reply-To is the sender (when given).
+//
+// Two kinds:
+//   kind: 'admin' (default) — a member message; CC's the chairman (CONTACT_CC).
+//   kind: 'bug'             — a bug report; goes to the inbox only, no CC.
 //
 // Required Vercel env vars (Production):
 //   GMAIL_USER          the Workspace account that logs in, e.g. joe@gruvyo.com
 //   GMAIL_APP_PASSWORD  a 16-char Google App Password for that account
+//   CONTACT_CC          optional CC for admin messages (e.g. the chairman)
 const nodemailer = require('nodemailer');
 
 const TO = 'joe@gruvyo.com';
 const FROM = 'SPC Member Assistant <joe@gruvyo.com>';
 // Optional CC (e.g. the committee chairman), kept in an env var so a personal
-// address never lands in this public repo. Set CONTACT_CC in the host env.
+// address never lands in this public repo. Applied to admin messages only.
 const CC = (process.env.CONTACT_CC && process.env.CONTACT_CC.trim()) || undefined;
 
 module.exports = async (req, res) => {
@@ -24,14 +28,18 @@ module.exports = async (req, res) => {
 
   const body = typeof req.body === 'string' ? safeParse(req.body) : (req.body || {});
   const {
-    name = '', email = '', message = '', transcript = '', botcheck,
+    kind = 'admin', name = '', email = '', message = '', transcript = '', botcheck,
   } = body;
+  const isBug = kind === 'bug';
 
   // Honeypot: a real person never fills the hidden botcheck field.
   if (botcheck) return res.status(200).json({ success: true });
 
-  if (!name.trim() || !message.trim()) {
-    return res.status(400).json({ error: 'Please add your name and a short message.' });
+  if (!message.trim()) {
+    return res.status(400).json({ error: 'Please add a short message.' });
+  }
+  if (!isBug && !name.trim()) {
+    return res.status(400).json({ error: 'Please add your name.' });
   }
   if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
     return res.status(400).json({ error: "That email address doesn't look right." });
@@ -54,10 +62,11 @@ module.exports = async (req, res) => {
     auth: { user, pass },
   });
 
+  const who = name.trim() ? `${name.trim()}${email.trim() ? ` <${email.trim()}>` : ''}` : (email.trim() || 'anonymous');
   const lines = [
-    `From:    ${name.trim()}${email.trim() ? ` <${email.trim()}>` : ''}`,
+    `From:    ${who}`,
     '',
-    'Message:',
+    isBug ? 'Bug report:' : 'Message:',
     message.trim(),
   ];
   if (transcript && transcript.trim() && !/^\(No conversation/i.test(transcript.trim())) {
@@ -65,13 +74,17 @@ module.exports = async (req, res) => {
   }
   const text = lines.join('\n');
 
+  const subject = isBug
+    ? `SPC Assistant — BUG REPORT${name.trim() ? ` from ${name.trim()}` : ''}`
+    : `SPC Assistant — message from ${name.trim()}`;
+
   try {
     await transporter.sendMail({
       from: FROM,
       to: TO,
-      cc: CC,
-      replyTo: email.trim() ? `${name.trim()} <${email.trim()}>` : undefined,
-      subject: `SPC Assistant — message from ${name.trim()}`,
+      cc: isBug ? undefined : CC, // chairman is not CC'd on bug reports
+      replyTo: email.trim() ? `${name.trim() || 'Member'} <${email.trim()}>` : undefined,
+      subject,
       text,
     });
     return res.status(200).json({ success: true });

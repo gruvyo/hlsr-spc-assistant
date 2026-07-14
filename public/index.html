@@ -44,7 +44,10 @@
         <p class="app-sub"><span class="dot"></span>Member Assistant</p>
       </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
-      <button class="captain-btn" id="captain-open" type="button">Contact Admin</button>
+      <div class="header-actions">
+        <button class="captain-btn" id="captain-open" type="button">Contact Admin</button>
+        <button class="bug-link" id="bug-open" type="button">Submit a bug</button>
+      </div>
     </header>
 
     <div class="chat-log" id="chat-log">
@@ -102,6 +105,40 @@
         <p class="cap-banner" id="cap-banner">Sent. A committee administrator will follow up.</p>
         <pre class="cap-preview" id="cap-preview"></pre>
         <button class="btn-primary" id="captain-done" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit a bug -->
+  <div class="modal" id="bug-modal" hidden>
+    <div class="modal-overlay" id="bug-overlay"></div>
+    <div class="sheet">
+      <div class="sheet-head">
+        <p class="sheet-title">Submit a bug</p>
+        <button class="sheet-close" id="bug-close" type="button" aria-label="Close">&times;</button>
+      </div>
+
+      <form class="cap-form" id="bug-form">
+        <p class="hp"><label>Leave blank <input name="botcheck" id="bug-botcheck" tabindex="-1" autocomplete="off" /></label></p>
+        <label class="field">
+          <span>What went wrong?</span>
+          <textarea id="bug-message" rows="4" placeholder="Describe the problem — what you did and what happened." required></textarea>
+        </label>
+        <label class="field">
+          <span>Your email (optional, so we can follow up)</span>
+          <input type="email" id="bug-email" placeholder="you@example.com" />
+        </label>
+        <label class="check">
+          <input type="checkbox" id="bug-transcript" checked />
+          <span>Include this chat transcript</span>
+        </label>
+        <button class="btn-primary" type="submit">Send bug report</button>
+      </form>
+
+      <div class="cap-sent" id="bug-sent" hidden>
+        <p class="cap-banner" id="bug-banner">Thanks — your bug report was sent.</p>
+        <pre class="cap-preview" id="bug-preview"></pre>
+        <button class="btn-primary" id="bug-done" type="button">Done</button>
       </div>
     </div>
   </div>

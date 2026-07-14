@@ -152,6 +152,64 @@
   document.getElementById('captain-overlay').addEventListener('click', closeModal);
   document.getElementById('captain-done').addEventListener('click', closeModal);
 
+  // ---- Submit a bug ----
+  // Sends a bug report (and optionally the chat transcript) to the inbox via the
+  // same /contact function with kind:'bug' (which skips the chairman CC).
+  const bugModal = document.getElementById('bug-modal');
+  const bugForm = document.getElementById('bug-form');
+  const bugSent = document.getElementById('bug-sent');
+  const bugMsgEl = document.getElementById('bug-message');
+  const bugPreviewEl = document.getElementById('bug-preview');
+
+  function openBug() {
+    bugForm.hidden = false;
+    bugSent.hidden = true;
+    bugForm.reset();
+    bugModal.hidden = false;
+    bugMsgEl.focus();
+  }
+  function closeBug() { bugModal.hidden = true; }
+
+  bugForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const message = bugMsgEl.value.trim();
+    const email = document.getElementById('bug-email').value.trim();
+    const includeTx = document.getElementById('bug-transcript').checked;
+    const botcheck = document.getElementById('bug-botcheck').value;
+    if (!message) { bugMsgEl.focus(); return; }
+    const tx = includeTx ? transcript() : '';
+
+    const banner = document.getElementById('bug-banner');
+    const btn = bugForm.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    let preview = email ? `Reply to: ${email}\n\n${message}` : message;
+    if (tx) preview += `\n\n--- Assistant chat transcript ---\n${tx}`;
+    bugPreviewEl.textContent = preview;
+
+    let ok = false;
+    try {
+      const res = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'bug', email, message, transcript: tx, botcheck }),
+      });
+      ok = res.ok && (await res.json()).success === true;
+    } catch (err) {}
+
+    banner.textContent = ok
+      ? 'Thanks — your bug report was sent.'
+      : 'Sending failed. Here is what would have been sent; please try again.';
+
+    bugForm.hidden = true;
+    bugSent.hidden = false;
+  });
+
+  document.getElementById('bug-open').addEventListener('click', openBug);
+  document.getElementById('bug-close').addEventListener('click', closeBug);
+  document.getElementById('bug-overlay').addEventListener('click', closeBug);
+  document.getElementById('bug-done').addEventListener('click', closeBug);
+
   // ---- Theme: default to the system setting, allow an in-app override ----
   // The override is saved in localStorage and pre-applied in <head> to avoid a
   // flash. The button shows the theme you'd switch TO.

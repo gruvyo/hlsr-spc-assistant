@@ -271,6 +271,28 @@ body {
 .theme-toggle:hover { background: var(--header-hover); border-color: var(--white); }
 .theme-toggle svg { width: 18px; height: 18px; }
 
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.bug-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.bug-link:hover { color: var(--white); }
+
 .captain-btn {
   flex-shrink: 0;
   background: transparent;
