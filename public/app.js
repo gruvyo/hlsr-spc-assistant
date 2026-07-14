@@ -1,6 +1,5 @@
-// SPC Member Assistant. Renders answers as sanitized markdown (so tables,
-// lists, and paragraphs display properly) and tucks sources into a
-// collapsible dropdown with links back to each doc.
+// SPC Member Assistant. Renders answers as sanitized markdown so tables,
+// lists, and paragraphs display properly.
 (function () {
   const log = document.getElementById('chat-log');
   const form = document.getElementById('composer');
@@ -38,34 +37,8 @@
     return bubble;
   }
 
-  function renderAnswer(bubble, reply, sources) {
+  function renderAnswer(bubble, reply) {
     bubble.innerHTML = DOMPurify.sanitize(marked.parse(reply || ''));
-
-    const named = (sources || []).filter((s) => s.title);
-    if (named.length) {
-      const details = document.createElement('details');
-      details.className = 'sources';
-      const summary = document.createElement('summary');
-      summary.textContent = `Sources (${named.length})`;
-      details.appendChild(summary);
-      const ul = document.createElement('ul');
-      named.forEach((s) => {
-        const li = document.createElement('li');
-        if (s.url) {
-          const a = document.createElement('a');
-          a.href = s.url;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.textContent = s.title;
-          li.appendChild(a);
-        } else {
-          li.textContent = s.title;
-        }
-        ul.appendChild(li);
-      });
-      details.appendChild(ul);
-      bubble.appendChild(details);
-    }
     scrollDown();
   }
 
@@ -83,7 +56,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Request failed');
-      renderAnswer(bubble, data.reply, data.sources);
+      renderAnswer(bubble, data.reply);
       history.push({ role: 'assistant', content: data.reply || '' });
     } catch (err) {
       bubble.textContent =
@@ -103,46 +76,21 @@
     b.addEventListener('click', () => ask(b.textContent));
   });
 
-  // ---- Contact captain (simulated) ----
-  // Sample names only. Real captain contacts are confidential member data
-  // and would come from a private source, not this public repo. For the POC
-  // the team field accepts anything and always resolves to a captain.
-  const CAPTAIN_NAMES = [
-    'Luke Combs', 'Jelly Roll', 'Carrie Underwood', 'Morgan Wallen', 'Lainey Wilson',
-    'Chris Stapleton', 'Miranda Lambert', 'Cody Johnson', 'Kacey Musgraves', 'George Strait',
-  ];
-  function captainFor(team) {
-    const t = String(team).trim();
-    if (!t) return null;
-    const n = parseInt(t, 10);
-    let idx;
-    if (Number.isInteger(n) && n >= 1 && n <= CAPTAIN_NAMES.length) {
-      idx = n - 1; // teams 1-10 map directly
-    } else {
-      let h = 0;
-      for (const c of t) h = (h + c.charCodeAt(0)) % CAPTAIN_NAMES.length;
-      idx = h; // any other input still resolves deterministically
-    }
-    const name = CAPTAIN_NAMES[idx];
-    const email = name.toLowerCase().replace(/[^a-z]+/g, '.') + '@example.com';
-    return { name, email };
-  }
-
+  // ---- Contact Admin ----
+  // Sends the member's message (and optionally the chat transcript) to a
+  // committee administrator over email, via the /contact serverless function.
   const modal = document.getElementById('captain-modal');
   const capForm = document.getElementById('captain-form');
   const capSent = document.getElementById('captain-sent');
-  const teamEl = document.getElementById('cap-team');
-  const matchEl = document.getElementById('cap-match');
+  const nameEl = document.getElementById('cap-name');
   const previewEl = document.getElementById('cap-preview');
 
   function openModal() {
     capForm.hidden = false;
     capSent.hidden = true;
     capForm.reset();
-    matchEl.textContent = '';
-    matchEl.className = 'cap-match';
     modal.hidden = false;
-    teamEl.focus();
+    nameEl.focus();
   }
   function closeModal() { modal.hidden = true; }
 
@@ -153,72 +101,38 @@
       .join('\n\n');
   }
 
-  teamEl.addEventListener('input', () => {
-    const cap = captainFor(teamEl.value);
-    if (!cap) {
-      matchEl.textContent = '';
-      matchEl.className = 'cap-match';
-    } else {
-      matchEl.textContent = 'Captain: ' + cap.name;
-      matchEl.className = 'cap-match found';
-    }
-  });
-
   capForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const team = teamEl.value.trim();
-    const cap = captainFor(team);
-    if (!cap) { teamEl.focus(); return; }
-
-    const name = document.getElementById('cap-name').value.trim();
+    const name = nameEl.value.trim();
     const email = document.getElementById('cap-email').value.trim();
     const message = document.getElementById('cap-message').value.trim();
     const includeTx = document.getElementById('cap-transcript').checked;
-    const tx = transcript();
+    const botcheck = document.getElementById('cap-botcheck').value;
+    if (!name || !message) { nameEl.focus(); return; }
+    const tx = includeTx ? transcript() : '';
 
     const banner = document.getElementById('cap-banner');
     const btn = capForm.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-    // Brief AI summary of the conversation for the captain.
-    let summary = '';
-    if (includeTx) {
-      try {
-        const sres = await fetch('/.netlify/functions/summarize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ transcript: tx }),
-        });
-        summary = (await sres.json()).summary || '';
-      } catch (e) {}
-    }
+    // Preview of what's being sent.
+    let preview = `From: ${name}${email ? ` <${email}>` : ''}\n\n${message}`;
+    if (tx) preview += `\n\n--- Assistant chat transcript ---\n${tx}`;
+    previewEl.textContent = preview;
 
-    // Compose the email like a letter: greeting, message, signature, then
-    // (optionally) a summary and the full transcript.
-    const signature = `${name}${email ? `\n${email}` : ''}\nTeam ${team}`;
-    let body = `Hi ${cap.name},\n\n${message}\n\nThank you,\n${signature}`;
-    if (includeTx) {
-      if (summary) body += `\n\n---\nConversation summary: ${summary}`;
-      body += `\n\n--- Full transcript ---\n${tx}`;
-    }
-
-    // Fill hidden fields the Netlify submission carries.
-    document.getElementById('cap-captain').value = `${cap.name} <${cap.email}>`;
-    document.getElementById('cap-member').value = `${name}${email ? ` <${email}>` : ''}`;
-    document.getElementById('cap-email-body').value = body;
-
-    previewEl.textContent = body;
-
+    let ok = false;
     try {
-      await fetch('/', {
+      const res = await fetch('/.netlify/functions/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(capForm)).toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, transcript: tx, botcheck }),
       });
-      banner.textContent = 'Sent. The committee has been notified by email.';
-    } catch (err) {
-      banner.textContent = 'Sending failed. Here is what would have been sent; please try again.';
-    }
+      ok = res.ok && (await res.json()).success === true;
+    } catch (err) {}
+
+    banner.textContent = ok
+      ? 'Sent. A committee administrator will follow up.'
+      : 'Sending failed. Here is what would have been sent; please try again.';
 
     capForm.hidden = true;
     capSent.hidden = false;

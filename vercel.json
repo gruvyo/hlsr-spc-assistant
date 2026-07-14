@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node scripts/build-embeddings.mjs",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "public",
   "rewrites": [
     { "source": "/.netlify/functions/:fn", "destination": "/api/:fn" }

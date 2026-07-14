@@ -1,0 +1,4 @@
+# Netlify-only. Retire this host: 301 every path to the Vercel copy so the
+# original hlsr-spc-assistant.netlify.app link keeps working. Vercel ignores
+# this file (it uses vercel.json), so it is harmless there.
+/*  https://hlsr-spc-assistant.vercel.app/:splat  301!

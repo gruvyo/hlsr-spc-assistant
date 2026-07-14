@@ -1,0 +1,9 @@
+{
+  "name": "hlsr-spc-assistant",
+  "version": "2.0.0",
+  "private": true,
+  "description": "HLSR Souvenir Program Committee member assistant — a Poe-only grounded chatbot with a Gmail-SMTP contact form.",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}

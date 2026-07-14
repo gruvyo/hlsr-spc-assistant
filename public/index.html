@@ -9,10 +9,10 @@
 
   <!-- OpenGraph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://hlsr-spc-assistant.netlify.app/" />
+  <meta property="og:url" content="https://hlsr-spc-assistant.vercel.app/" />
   <meta property="og:title" content="SPC Member Assistant" />
   <meta property="og:description" content="Ask about forms, deadlines, ad ordering, and committee procedures. Answered from the Souvenir Program Committee knowledge base." />
-  <meta property="og:image" content="https://hlsr-spc-assistant.netlify.app/og.png" />
+  <meta property="og:image" content="https://hlsr-spc-assistant.vercel.app/og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SPC Member Assistant" />
   <meta name="twitter:description" content="Ask about forms, deadlines, ad ordering, and committee procedures. Answered from the Souvenir Program Committee knowledge base." />
-  <meta name="twitter:image" content="https://hlsr-spc-assistant.netlify.app/og.png" />
+  <meta name="twitter:image" content="https://hlsr-spc-assistant.vercel.app/og.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -34,7 +34,7 @@
         <p class="app-name">Souvenir Program Committee</p>
         <p class="app-sub"><span class="dot"></span>Member Assistant</p>
       </div>
-      <button class="captain-btn" id="captain-open" type="button">Contact captain</button>
+      <button class="captain-btn" id="captain-open" type="button">Contact Admin</button>
     </header>
 
     <div class="chat-log" id="chat-log">
@@ -58,47 +58,38 @@
     </form>
   </div>
 
-  <!-- Contact captain (simulated) -->
+  <!-- Contact Admin -->
   <div class="modal" id="captain-modal" hidden>
     <div class="modal-overlay" id="captain-overlay"></div>
     <div class="sheet">
       <div class="sheet-head">
-        <p class="sheet-title">Contact your captain</p>
+        <p class="sheet-title">Contact an administrator</p>
         <button class="sheet-close" id="captain-close" type="button" aria-label="Close">&times;</button>
       </div>
 
-      <form class="cap-form" id="captain-form" name="captain-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="captain-contact" />
-        <p class="hp"><label>Leave blank <input name="bot-field" /></label></p>
-        <input type="hidden" name="captain" id="cap-captain" />
-        <input type="hidden" name="member" id="cap-member" />
-        <input type="hidden" name="email_body" id="cap-email-body" />
-        <label class="field">
-          <span>Team number</span>
-          <input type="text" name="team" id="cap-team" inputmode="numeric" placeholder="e.g. 5" required />
-          <span class="cap-match" id="cap-match"></span>
-        </label>
+      <form class="cap-form" id="captain-form">
+        <p class="hp"><label>Leave blank <input name="botcheck" id="cap-botcheck" tabindex="-1" autocomplete="off" /></label></p>
         <label class="field">
           <span>Your name</span>
           <input type="text" id="cap-name" placeholder="First and last name" required />
         </label>
         <label class="field">
-          <span>Message to your captain</span>
-          <textarea id="cap-message" rows="3" placeholder="What would you like to ask your captain?" required></textarea>
+          <span>Your message</span>
+          <textarea id="cap-message" rows="3" placeholder="What would you like to ask a committee administrator?" required></textarea>
         </label>
         <label class="field">
-          <span>Your email (optional, to receive a copy)</span>
+          <span>Your email (optional, so we can reply)</span>
           <input type="email" id="cap-email" placeholder="you@example.com" />
         </label>
         <label class="check">
           <input type="checkbox" id="cap-transcript" checked />
           <span>Include this chat transcript</span>
         </label>
-        <button class="btn-primary" type="submit">Send to captain</button>
+        <button class="btn-primary" type="submit">Send message</button>
       </form>
 
       <div class="cap-sent" id="captain-sent" hidden>
-        <p class="cap-banner" id="cap-banner">Sent. A copy was emailed to the committee inbox.</p>
+        <p class="cap-banner" id="cap-banner">Sent. A committee administrator will follow up.</p>
         <pre class="cap-preview" id="cap-preview"></pre>
         <button class="btn-primary" id="captain-done" type="button">Done</button>
       </div>
