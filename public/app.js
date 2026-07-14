@@ -71,16 +71,17 @@
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let full = '';
-      let anchored = false;
       for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
         full += decoder.decode(value, { stream: true });
         renderAnswer(bubble, full);
-        if (!anchored) { anchorQuestion(userEl); anchored = true; }
+        // Keep the question pinned to the top as the answer grows, so it reads
+        // from the beginning (once the content is tall enough to scroll).
+        anchorQuestion(userEl);
       }
       if (!full) renderAnswer(bubble, 'Sorry — I could not generate a reply. Please try again.');
-      if (!anchored) anchorQuestion(userEl);
+      anchorQuestion(userEl);
       history.push({ role: 'assistant', content: full });
     } catch (err) {
       bubble.textContent =
