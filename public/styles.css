@@ -145,6 +145,9 @@ body {
   border-radius: 16px;
   font-size: 0.98rem;
   line-height: 1.55;
+  /* Long URLs / unbroken strings wrap inside the bubble instead of overflowing. */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .msg.bot .bubble {
