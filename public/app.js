@@ -150,6 +150,7 @@
   document.getElementById('captain-open').addEventListener('click', openModal);
   document.getElementById('captain-close').addEventListener('click', closeModal);
   document.getElementById('captain-overlay').addEventListener('click', closeModal);
+  document.getElementById('captain-cancel').addEventListener('click', closeModal);
   document.getElementById('captain-done').addEventListener('click', closeModal);
 
   // ---- Submit a bug ----
@@ -205,9 +206,18 @@
     bugSent.hidden = false;
   });
 
-  document.getElementById('bug-open').addEventListener('click', openBug);
+  // A confirm step before the bug form opens, so the small link isn't acted on
+  // by accident.
+  const bugConfirm = document.getElementById('bugconfirm-modal');
+  const closeBugConfirm = () => { bugConfirm.hidden = true; };
+  document.getElementById('bug-open').addEventListener('click', () => { bugConfirm.hidden = false; });
+  document.getElementById('bugconfirm-close').addEventListener('click', closeBugConfirm);
+  document.getElementById('bugconfirm-overlay').addEventListener('click', closeBugConfirm);
+  document.getElementById('bugconfirm-cancel').addEventListener('click', closeBugConfirm);
+  document.getElementById('bugconfirm-yes').addEventListener('click', () => { closeBugConfirm(); openBug(); });
   document.getElementById('bug-close').addEventListener('click', closeBug);
   document.getElementById('bug-overlay').addEventListener('click', closeBug);
+  document.getElementById('bug-cancel').addEventListener('click', closeBug);
   document.getElementById('bug-done').addEventListener('click', closeBug);
 
   // ---- Theme: default to the system setting, allow an in-app override ----
